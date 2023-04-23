@@ -5,7 +5,7 @@ import "../css/styles.css"
 import airplane from "../assets/airplane.svg"
 function SignIn() {
   return (
-    <div id='bg-login' className="min-h-screen px-8 bg-[#E6F2FD]">
+    <div id='bg-login' className="h-screen bg-[#E6F2FD]">
       <NavigationBar />    
       <div className='flex justify-center items-center h-full'>
         <div className='relative w-[50rem] h-[38rem] bg-white rounded-[15px] px-20 py-16 drop-shadow-xl'>
