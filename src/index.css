@@ -16,3 +16,6 @@
 .font-lexend{
     font-family: Lexend;
 }
+.shadow-king{
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
+}

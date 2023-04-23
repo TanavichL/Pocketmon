@@ -3,7 +3,7 @@ import logo from "../assets/pocket-logo.svg"
 
 export default function NavigationBar() {
   return (
-    <nav className='w-full absolute flex justify-center z-10'>
+    <nav className='w-full flex justify-center absolute top-0'>
       <div className="w-[85%] h-20 flex justify-between items-center bg-transparent">
         <div id="logo" className="flex">
             <img src={logo} alt="" />
