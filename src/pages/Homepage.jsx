@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
+import NavigationBar from '../components/NavigationBar'
 function Homepage() {
   return (
-    <div className="min-h-screen bg-red-200">
-
-    </div>
+    <div className="min-h-screen bg-[#E6F2FD]">
+      <NavigationBar />    
+      </div>
   )
 }
  
