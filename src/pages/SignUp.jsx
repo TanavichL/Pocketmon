@@ -5,18 +5,29 @@ import "../css/styles.css"
 import airplane from "../assets/airplane.svg"
 function SignIn() {
   return (
-    <div id='bg-login' className="min-h-screen px-8 flex flex-col justify-center items-center bg-[#E6F2FD]">
-      {/* <NavigationBar />     */}
-      <div className='relative w-[50rem] h-[38rem] bg-white rounded-[15px] px-20 py-16 drop-shadow-xl'>
-        <img className='absolute w-[38rem] z-10 right-[-20rem] top-[3rem]' src={airplane} alt="" />
-        <input className='mt-10 w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px]' placeholder='Email' type="text" />
-        <input className='mt-6 w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px]' placeholder='Password' type="text" />
-        <div className='flex justify-center items-center mt-7 bg-[#07636B] rounded-[10px] p-3 cursor-pointer'>
-            <p className='text-white font-[500] text-[20px]'>SignIn</p>
-        </div>
-        <div className='flex justify-center space-x-2 font-[500] text-[20px] mt-14'>
-            <p>Don’t have an account?</p>
-            <p className='text-[#07636B] cursor-pointer'>SIGN UP</p>
+    <div id='bg-login' className="h-screen bg-[#DFF2E8]">
+      <NavigationBar />    
+      <div className='flex justify-center items-center h-full'>
+        <div className='relative w-[35%] bg-white rounded-[15px] px-20 py-16 shadow'>
+            <img className='absolute w-[38rem] z-10 right-[-20rem] top-[3rem]' src={airplane} alt="" />
+            <p className='text-[36px] font-[500] font-jura'>Create Account</p>
+            <div className='h-1 w-[6rem] bg-[#07636B] rounded-[10px] ml-1'></div>
+            <form className='space-y-6 mt-7'>
+                <input className='w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Name' type="text" />
+                <input className='w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Nickname' type="text" />
+                <input className='w-full h-[3rem] px-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Birthday' type="text" onFocus={(e) => (e.target.type = "date")} onBlur={(e) => (e.target.type = "text")}/>
+                <input className='w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Tel.' type="text" onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()} maxLength={10} required/>
+                <input className='w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Email' type="email" />
+                <input className='w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Password' type="password" />
+                <input className='w-full h-[3rem] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Confirm Password' type="password" />
+                <div className='flex justify-center items-center mt-7 bg-[#07636B] rounded-[10px] p-3'>
+                    <p className='text-white font-[500] text-[20px]'>SignUp</p>
+                </div>
+            </form>
+            <div className='flex justify-center space-x-2 font-[500] text-[20px] mt-14'>
+                <p>Already have any account?</p>
+                <p className='text-[#07636B] cursor-pointer'>SIGN IN</p>
+            </div>
         </div>
       </div>
     </div>
