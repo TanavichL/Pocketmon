@@ -15,7 +15,7 @@ function Profile() {
                 <div className="relative flex flex-col bg-white p-4 mt-[12rem] w-[50%] p-8 rounded-[20px] shadow-king">
                     <p className='font-jura text-[1.875vw]'>Profile</p>
                     <div className='h-1 w-[4rem] bg-[#07636B] rounded-[10px] ml-1'></div>
-                    <div className='space-y-2 px-12 mt-4'>
+                    <div className='space-y-2 xl:px-14 px-10 mt-4'>
                         <p className='text-[1.0416666666666667vw] font-jura'>Name</p>
                         <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px]'>
                             <p className='text-[#626060]'>Tanavich Laksana</p>
@@ -30,15 +30,15 @@ function Profile() {
                         </div>
                         <p className='text-[1.0416666666666667vw] font-jura'>Biethday</p>
                         <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px]'>
-                            <p>11/09/02</p>
+                            <p className='text-[#626060]'>11/09/02</p>
                         </div>
                         <p className='text-[1.0416666666666667vw] font-jura'>Tel.</p>
                         <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px]'>
-                            <p>0909135284</p>
+                            <p className='text-[#626060]'>0909135284</p>
                         </div>
                         <p className='text-[1.0416666666666667vw] font-jura'>Email</p>
                         <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px]'>
-                            <p>63070077@kmitl.ac.th</p>
+                            <p className='text-[#626060]'>63070077@kmitl.ac.th</p>
                         </div>
                     </div>
                 </div>
