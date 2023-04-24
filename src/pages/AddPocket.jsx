@@ -9,6 +9,7 @@ import img3 from "../assets/pocket-img3.png";
 import img4 from "../assets/pocket-img4.png";
 import unlock from "../assets/unlock.svg";
 import lock from "../assets/lock.svg";
+import header from "../assets/header-bg.svg";
 
 function AddPocket() {
   const [isChecked, setIsChecked] = useState(false);
@@ -36,10 +37,14 @@ function AddPocket() {
   }
 
   return (
-    <div id="header-bg" className="min-h-screen bg-[#E6F2FD]">
+    <div className="min-h-screen bg-[#E6F2FD]">
       <NavigationBar />
-      <div className="relative flex justify-center items-center h-full">
-        <div className="relative w-[60rem] h-[38rem] bg-white rounded-[15px] px-20 py-16 drop-shadow-xl">
+      
+      <img src={header} className="w-full absolute" alt="" />
+
+      <div className="relative flex  justify-center items-center h-full">
+        
+        <div className="relative w-[60rem] h-[38rem] bg-white rounded-[15px] px-20 py-16 drop-shadow-xl mt-40">
           <div>
             <p className="font-jura text-[36px]">Add Pocket</p>
             <img
