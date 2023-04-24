@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar'
 import "../css/styles.css"
 import airplane from "../assets/airplane.svg"
 function SignIn() {
+  const [email, setEmail] = useState('');
   return (
     <div id='bg-login' className="h-screen bg-[#DFF2E8]">
       <NavigationBar />    
@@ -22,10 +24,11 @@ function SignIn() {
             <div className='flex justify-center items-center mt-7 bg-[#07636B] rounded-[10px] p-3 cursor-pointer'>
                 <p className='text-white font-[500] text-[0.78125vw]'>SignIn</p>
             </div>
-            <div className='flex justify-center space-x-2 font-[500] text-[0.78125vw] lg:mt-7 2xl:mt-14 font-jura'>
+            <Link to={"../signup"} className='flex justify-center space-x-2 font-[500] text-[1.0416666666666667vw] lg:mt-7 2xl:mt-14 font-jura'>
                 <p>Don’t have an account?</p>
                 <p className='text-[#07636B] cursor-pointer'>SIGN UP</p>
-            </div>
+            </Link>
+            <link rel="stylesheet" href="" />
         </div>
       </div>
     </div>
