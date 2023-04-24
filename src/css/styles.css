@@ -4,3 +4,9 @@
     background-size: cover;
     background-position: 0 -12rem;
 }
+
+#header-bg{
+    background-image: url("../assets/header-bg.svg");
+    background-repeat: no-repeat;
+
+}
