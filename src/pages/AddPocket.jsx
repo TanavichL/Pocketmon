@@ -11,7 +11,6 @@ import unlock from "../assets/unlock.svg";
 import lock from "../assets/lock.svg";
 import header from "../assets/header-bg.svg";
 
-
 function AddPocket() {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -105,8 +104,6 @@ function AddPocket() {
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 }
