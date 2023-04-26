@@ -44,7 +44,7 @@ function AddPocket() {
 
       <div className="relative flex  justify-center items-center h-full">
         
-        <div className="relative w-[60rem] h-[38rem] bg-white rounded-[15px] px-20 py-16 drop-shadow-xl mt-40">
+        <div className="relative w-[60rem] h-[40rem] bg-white rounded-[15px] px-20 py-16 drop-shadow-xl mt-40 mb-20">
           <div>
             <p className="font-jura text-[36px]">Add Pocket</p>
             <img
