@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard"
 import Pocket from "./pages/Pocket"
 import Withdraw from "./pages/Withdraw"
 import Profile from "./pages/Profile"
+import TransferTo from "./pages/TransferTo"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/Pocket" element={<Pocket />} />
         <Route exact path="/Withdraw" element={<Withdraw />}/>
         <Route exact path="/Profile" element={<Profile />} />
+        <Route exact path="/TransferTo" element={<TransferTo />} />
       </Routes>
     </BrowserRouter>
   )
