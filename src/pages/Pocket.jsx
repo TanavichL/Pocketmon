@@ -68,7 +68,7 @@ function Pocket() {
   const [name, setName] = useState("");
 
   return (
-    <div className="min-h-screen bg-[#E6F2FD]">
+    <div className="min-h-screen bg-[#F9F8F8]">
       <NavigationBar />
 
       <img src={header} className="w-full absolute" alt="" />
@@ -141,7 +141,7 @@ function Pocket() {
           </div>
         </div>
 
-        <div className="w-[60rem] min-h-[35rem] bg-white rounded-[15px] mt-10 mb-20 overflow-y-auto">
+        <div className="w-[60rem] min-h-[35rem] bg-white rounded-[15px] mt-10 mb-20 overflow-y-auto shadow-king">
           <div className="border border-1 rounded-t-[15px] w-[60rem] h-[5rem] flex items-center justify-between">
             <div className="font-lexend text-[30px] p-10">Statement</div>
             <div className="font-lexend text-[20px] text-gray-500 p-10">
