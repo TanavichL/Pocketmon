@@ -35,9 +35,21 @@ function AddPocket() {
       />
     );
   }
-
+  function submitPocket(){
+    axios.post(`${path}/addPocket`, {
+      email: email,
+      password: password,
+    }).then((res) => {
+      try{
+        localStorage.setItem("user_id", res.data[0].user_id)
+        router('/dashboard')
+      }catch(er){
+        console.log(er)
+      }
+    })
+    }
   return (
-    <div className="min-h-screen bg-[#E6F2FD]">
+    <div className="min-h-screen bg-[#F9F8F8]">
       <NavigationBar />
       
       <img src={header} className="w-full absolute" alt="" />
@@ -55,7 +67,7 @@ function AddPocket() {
             <p className="font-jura text-[20px] font-bold mt-5">
               Choose Cloud Pocket Backgroud
             </p>
-            <div class="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 gap-4">
               {Array.from({ length: 4 }).map((_, index) => (
                 <RednderImage key={index} index={index} />
               ))}
@@ -66,18 +78,18 @@ function AddPocket() {
             <input
               type="text"
               id="pocket_name"
-              class="block border border-gray-300 w-96 h-10 p-5 rounded-lg"
+              className="block border border-gray-300 w-96 h-10 p-5 rounded-lg"
             ></input>
 
             <div className="flex  items-centers space-y-5 space-x-2">
-              <label class="relative inline-flex items-center cursor-pointer mt-5">
+              <label className="relative inline-flex items-center cursor-pointer mt-5">
                 <input
                   type="checkbox"
                   value=""
-                  class="sr-only peer"
+                  className="sr-only peer"
                   onChange={handleCheckboxChange}
                 ></input>
-                <div class="w-11 h-6  bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[17px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                <div className="w-11 h-6  bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[17px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
               </label>
 
               {isChecked ? (

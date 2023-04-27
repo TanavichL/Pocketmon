@@ -1,23 +1,27 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar'
 import "../css/styles.css"
 import airplane from "../assets/airplane.svg"
 import axios from "axios"
 import path from "../../path";
 
-
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useNavigate();
   function login(){
     axios.post(`${path}/login`, {
       email: email,
       password: password,
     }).then((res) => {
-      alert(res.data[0].user_id)
-      localStorage.setItem("user_id", res.data[0].user_id)
+      try{
+        localStorage.setItem("user_id", res.data[0].user_id)
+        router('/dashboard')
+      }catch(er){
+        console.log(er)
+      }
     })
     }
   return (
