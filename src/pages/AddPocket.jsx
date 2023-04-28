@@ -23,6 +23,7 @@ function AddPocket() {
   const handleSelectChange = (index) => {
     setIsSelected(isSelected);
     setSelectIndex(index);
+    console.log(selectIndex);
   };
   function RednderImage({ index }) {
     return (
@@ -52,7 +53,17 @@ function AddPocket() {
       cloud_statement: {},
     };
     myObj["pocket"] = newPocket
-    axios.post(`${path}/addpocket`, myObj)
+    axios.post(`${path}/addpocket`, {
+      user_id : localStorage.getItem("user_id"), 
+      pocket : {
+        cloud_balance: 0,
+        cloud_description: "New pocket item",
+        cloud_img: "new",
+        cloud_name: cloudName,
+        cloud_lock: isChecked,
+        cloud_statement: {},
+      }
+    })
       .then((res) => {
         try {
           console.log(res.data);

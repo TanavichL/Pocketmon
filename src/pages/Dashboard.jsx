@@ -47,13 +47,16 @@ function Dashboard() {
     },
   ];
   const [user, setUser] = useState(null)
+  const [balance, setBalance] = useState(0)
   useEffect(()=>{
     axios.post(`${path}/getUser`, {
       user_id: parseInt(localStorage.getItem("user_id")),
     }).then((res)=>{
       try {
         setUser(res.data)
-        // console.log(res.data.pocket[0])
+        res.data.pocket.forEach(element => {
+          setBalance(element.cloud_balance + balance)
+        });
       } catch (er) {
         console.log(er)
       }
@@ -73,7 +76,7 @@ function Dashboard() {
             <img src={logoCashBox} alt="" />
             <div className="">
               <p className="font-jura text-lg text-[#555555]">Cashbox</p>
-              <p className="text-xl font-inter font-normal">$ 2000</p>
+              <p className="text-xl font-inter font-normal">$ {user && user.cashbox}</p>
               <p className="font-jura text-sm">Account Number: x-xxx-4137</p>
             </div>
           </div>
@@ -96,18 +99,18 @@ function Dashboard() {
             </Link>
           </div>
           <div className="grid grid-cols-3 h-[33rem] gap-8 mt-8 overflow-y-scroll">
-            {data.map((res, index) => {
+            {user && user.pocket.map((res, index) => {
               return (
                 <div
                   key={index}
                   className="col-span-1 h-[15rem] rounded-xl shadow-king"
                 >
                   <div className="w-full rounded-lg">
-                    <img src={res.img} className="w-full" alt="" />
+                    <img  src={`./src/assets/pocket-img${index + 1}.png`} className="w-full" alt="" />
                   </div>
                   <div className="p-4">
-                    <div className="text-[#8F8B8B] text-lg">{res.name}</div>
-                    <div className="text-lg mt-8">฿ {res.amount}</div>
+                    <div className="text-[#8F8B8B] text-lg">{res.cloud_name}</div>
+                    <div className="text-lg mt-8">฿ {res.cloud_balance}</div>
                   </div>
                 </div>
               );
@@ -121,7 +124,7 @@ function Dashboard() {
               Account Balance
             </p>
             <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
-            <p className="text-4xl font-inter text-[#8F8B8B] mt-5">8000.00 ฿</p>
+            <p className="text-4xl font-inter text-[#8F8B8B] mt-5">{balance} ฿</p>
           </div>
           {/* Recent */}
           <div className="w-full py-4 px-6 rounded-2xl shadow-king bg-white">

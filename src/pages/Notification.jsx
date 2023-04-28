@@ -9,12 +9,11 @@ import img_cloud from "../assets/img-tranfer-pocket.png"
 function Notification() {
     const data = [
         {
-            st_id: {
-                st_date: 11,
-                st_status:[{type:"pocket", status: "income"}],
-                st_amout: 500
-            }
-        }
+            st_date: 11,
+            st_status:[{type:"pocket", status: "income"}],
+            st_amout: 500
+        },
+        
     ]
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
