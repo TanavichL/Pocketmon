@@ -2,7 +2,7 @@ import React from "react";
 import { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
-import logoCashBox from "..//assets/logo-cashbox.svg";
+import logoCashBox from "../assets/logo-cashbox.svg";
 import header from "../assets/header-bg.svg";
 import investment from "../assets/investment_cloud.svg";
 import IconProfile from "../assets/profile-icon.svg";

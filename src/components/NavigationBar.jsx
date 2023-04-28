@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/pocket-logo.svg";
 import icon_notification from "../assets/icon_notification.svg";
 import icon_profile from "../assets/profile-icon.svg";
+import profile_dropdown from "../assets/profile_dropdown.svg"
+import logout_dropdown from "../assets/logout_dropdown.svg"
 import triangle from "../assets/polygon.svg";
 import path from "../../path";
 
@@ -93,7 +95,6 @@ export default function NavigationBar() {
             <Link to={"/profile"}>
               <img src={icon_profile} className="w-10" alt="" />
             </Link>
-            <div className=""></div>
             <img
               className="relative"
               src={triangle}
@@ -103,25 +104,30 @@ export default function NavigationBar() {
               }}
             />
             {popup && (
-              <div className="w-[12rem] pb-2 rounded-lg flex justify-between flex-col right-0 top-14 bg-[#fcfcfc] absolute">
-                <div className=" border-b-2 cursor-not-allowed">
-                  <p className="px-4 py-2.5 text-[#aca9a9] font-jura">
+              <div className="w-[12rem] overflow-hidden rounded-lg flex justify-between flex-col right-0 top-14 bg-[#fcfcfc] absolute">
+                <div className="border-b border-[#ccc4c4] cursor-not-allowed">
+                  <p className="mt-1 px-4 py-2.5 text-[#aca9a9] font-jura">
                     {user.firstname + " " + user.lastname}
                   </p>
                 </div>
-                <div className="hover:bg-[#ebeaea]">
-                  <p className="px-4 py-2.5 font-jura text-[#2E4E44]">
+                <div className="flex items-center px-4 py-3 space-x-3 border-b border-[#f4f0f0] hover:bg-[#ebeaea]"
+                onClick={() => {
+                  router("/profile");
+                }}>
+                  <img src={profile_dropdown} alt="" />
+                  <p className="font-jura text-[#2E4E44]">
                     Profile
                   </p>
                 </div>
                 <div
-                  className="hover:bg-[#ebeaea]"
+                  className="flex items-center pb-4 px-4 py-3 space-x-3 hover:bg-[#ebeaea]"
                   onClick={() => {
                     localStorage.removeItem("user_id");
                     router("/");
                   }}
                 >
-                  <p className="px-4 py-2.5 font-jura text-[#2E4E44]">Logout</p>
+                  <img src={logout_dropdown} alt="" />
+                  <p className="font-jura text-[#2E4E44]">Logout</p>
                 </div>
               </div>
             )}
