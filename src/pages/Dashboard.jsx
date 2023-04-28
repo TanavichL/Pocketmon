@@ -53,11 +53,12 @@ function Dashboard() {
     }).then((res)=>{
       try {
         setUser(res.data)
+        // console.log(res.data.pocket[0])
       } catch (er) {
         console.log(er)
       }
     })
-  })
+  },[])
   return (
     <div className="w-full min-h-screen flex pb-10 flex-col items-center bg-[#F9F8F8]">
       <NavigationBar />

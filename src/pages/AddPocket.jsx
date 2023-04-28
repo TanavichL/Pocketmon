@@ -43,7 +43,6 @@ function AddPocket() {
     const myObj = {}
     const newPocket = {}
     myObj["user_id"] = localStorage.getItem("user_id")
-    console.log(myObj["user_id"])
     newPocket[pocket_id] = {
       cloud_balance: 0,
       cloud_description: "New pocket item",
