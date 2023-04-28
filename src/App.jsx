@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp"
 import AddPocket from "./pages/AddPocket"
 import Dashboard from "./pages/Dashboard"
 import Profile from "./pages/Profile"
+import Notification from "./pages/Notification"
 function App() {
   const [count, setCount] = useState(0)
 
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/AddPocket" element={<AddPocket />} />
         <Route exact path="/Dashboard" element={<Dashboard />} />
         <Route exact path="/Profile" element={<Profile />} />
+        <Route exact path="/Notification" element={<Notification />} />
       </Routes>
     </BrowserRouter>
   )
