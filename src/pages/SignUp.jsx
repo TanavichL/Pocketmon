@@ -7,7 +7,7 @@ import airplane from "../assets/airplane.svg"
 import axios from "axios"
 import path from "../../path";
 
-function SignIn() {
+function SignUp() {
   const [firstname, setFirstname] = useState("");
   const [surname, setSurname] = useState("");
   const [birth, setBirth] = useState();
@@ -16,14 +16,12 @@ function SignIn() {
   const [password, setPassword] = useState();
   const [confirm, setConfirm] = useState();
   const [validate, setValidate] = useState(false);
-  function signup(){
-    console.log(0);
+  function signupForm(){
     setValidate(false)
     if (password != confirm){
       setValidate(true)
       alert("password and confirm password incorrect")
     }else{
-      console.log(1);
     axios.post(`${path}/adduser`, {
       firstname: firstname,
       lastname: surname,  
@@ -33,12 +31,7 @@ function SignIn() {
       password: password,
       imgProfile: ""
     }).then((res) => {
-      if(res.data == "successfully"){
-        alert('success')
-      }
-      else{
-        console.log('failed')
-      }
+      alert(res.data)
     })
     }
   }
@@ -58,7 +51,7 @@ function SignIn() {
                 <input onChange={(e) => setEmail(e.target.value)} className='w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Email' type="email" />
                 <input onChange={(e) => setPassword(e.target.value)} className='w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Password' type="password" />
                 <input onChange={(e) => setConfirm(e.target.value)} className='w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none' placeholder='Confirm Password' type="password" />
-                <div onClick={signup} className='flex justify-center items-center mt-7 bg-[#07636B] rounded-[10px] p-3 cursor-pointer'>
+                <div onClick={signupForm} className='flex justify-center items-center mt-7 bg-[#07636B] rounded-[10px] p-3 cursor-pointer'>
                     <p className='text-white font-[500] text-[1.0416666666666667vw] font-jura'>SignUp</p>
                 </div>
             </form>
@@ -72,5 +65,5 @@ function SignIn() {
   )
 }
  
-export default SignIn
+export default SignUp
  
