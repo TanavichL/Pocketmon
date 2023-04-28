@@ -11,6 +11,7 @@ import Withdraw from "./pages/Withdraw";
 import Profile from "./pages/Profile";
 import TransferTo from "./pages/TransferTo";
 import TransferFrom from "./pages/TransferFrom"
+import Notification from "./pages/Notification"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/" element={<Homepage />} />
         <Route exact path="/SignIn" element={<SignIn />} />
         <Route exact path="/SignUp" element={<SignUp />} />
+        <Route exact path="/Notification" element={<Notification />} />
         <Route
           exact
           path="/AddPocket"

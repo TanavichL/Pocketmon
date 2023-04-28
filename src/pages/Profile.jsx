@@ -27,19 +27,9 @@ function Profile() {
                         </div>
                         <div className='h-1 w-[4rem] bg-[#07636B] rounded-[10px] ml-1'></div>
                         <div className='space-y-2 xl:px-14 px-10 mt-8'>
-                            <div className='flex w-full space-x-5'>
-                                <div className='w-[50%]'>
-                                    <p className='text-[1.0416666666666667vw] font-jura'>Name</p>
-                                    <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#5a5a5a] border-1 rounded-[10px] w-[50%]'>
-                                        <p className='text-[#626060]'>{name}</p>
-                                    </div>
-                                </div>
-                                <div className='w-[50%]'>
-                                    <p className='text-[1.0416666666666667vw] font-jura'>Nickname</p>
-                                    <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#5a5a5a] border-1 rounded-[10px]'>
-                                        <p className='text-[#626060]'>{nickname}</p>
-                                    </div>
-                                </div>
+                            <p className='text-[1.0416666666666667vw] font-jura'>Name</p>
+                            <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#5a5a5a] border-1 rounded-[10px] w-full'>
+                                <p className='text-[#626060]'>{name}</p>
                             </div>
                             <p className='text-[1.0416666666666667vw] font-jura'>Password</p>
                             <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#5a5a5a] border-1 rounded-[10px]'>
