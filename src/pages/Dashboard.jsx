@@ -47,21 +47,33 @@ function Dashboard() {
     },
   ];
   const [user, setUser] = useState(null)
-  const [balance, setBalance] = useState(0)
+  const [balances, setBalance] = useState(0)
+  const [cashbox, setCashbox] = useState(0)
+
   useEffect(()=>{
     axios.post(`${path}/getUser`, {
       user_id: parseInt(localStorage.getItem("user_id")),
     }).then((res)=>{
       try {
         setUser(res.data)
+        console.log(res.data);
+        setCashbox(res.data.cashbox.balance)
+        let cash = 0
         res.data.pocket.forEach(element => {
-          setBalance(element.cloud_balance + balance)
+          // console.log(element.cloud_balance);
+          cash += element.cloud_balance
+          // console.log(balances);
         });
+        setBalance(cash)
       } catch (er) {
         console.log(er)
       }
     })
   },[])
+  // console.log(balances);
+  function currencyFormat(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+ }
   return (
     <div className="w-full min-h-screen flex pb-10 flex-col items-center bg-[#F9F8F8]">
       <NavigationBar />
@@ -76,7 +88,7 @@ function Dashboard() {
             <img src={logoCashBox} alt="" />
             <div className="">
               <p className="font-jura text-lg text-[#555555]">Cashbox</p>
-              <p className="text-xl font-inter font-normal">$ {user && user.cashbox}</p>
+              <p className="text-xl font-inter font-normal">฿ {currencyFormat(cashbox)}</p>
               <p className="font-jura text-sm">Account Number: x-xxx-4137</p>
             </div>
           </div>
@@ -101,18 +113,20 @@ function Dashboard() {
           <div className="grid grid-cols-3 h-[33rem] gap-8 mt-8 overflow-y-scroll">
             {user && user.pocket.map((res, index) => {
               return (
-                <div
+                <Link
+                to={"/pocket"}
+                state={res}
                   key={index}
                   className="col-span-1 h-[15rem] rounded-xl shadow-king"
                 >
                   <div className="w-full rounded-lg">
-                    <img  src={`./src/assets/pocket-img${index + 1}.png`} className="w-full" alt="" />
+                    <img  src={`./src/assets/pocket-img${res.cloud_img}.png`} className="w-full" alt="" />
                   </div>
                   <div className="p-4">
                     <div className="text-[#8F8B8B] text-lg">{res.cloud_name}</div>
-                    <div className="text-lg mt-8">฿ {res.cloud_balance}</div>
+                    <div className="text-lg mt-8">฿ {currencyFormat(res.cloud_balance)}</div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -124,7 +138,8 @@ function Dashboard() {
               Account Balance
             </p>
             <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
-            <p className="text-4xl font-inter text-[#8F8B8B] mt-5">{balance} ฿</p>
+            {user && <p className="text-4xl font-inter text-[#8F8B8B] mt-5">{currencyFormat(cashbox + balances)} ฿</p>}
+            <sumpocket/>
           </div>
           {/* Recent */}
           <div className="w-full py-4 px-6 rounded-2xl shadow-king bg-white">
