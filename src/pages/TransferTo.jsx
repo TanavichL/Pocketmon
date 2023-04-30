@@ -3,6 +3,7 @@ import NavigationBar from "../components/NavigationBar";
 import "../css/styles.css";
 import header from "../assets/header-bg2.svg";
 import user from "../assets/profile-icon.svg";
+import { Link } from "react-router-dom";
 export default function TransferTo() {
   return (
     <div className="min-h-screen  bg-[#F9F8F8]">
@@ -44,9 +45,9 @@ export default function TransferTo() {
                   <p className="absolute right-4 top-1.5 text-xl text-gray-400">THB</p>
                 </div>
               </div>
-              <button className="bg-[#07636B] font-jura text-white rounded-md p-2">
+              <Link to={'/transferfrom'} className="bg-[#07636B] text-center font-jura text-white rounded-md p-2">
                 Continue
-              </button>
+              </Link>
             </div>
           </div>
         </div>

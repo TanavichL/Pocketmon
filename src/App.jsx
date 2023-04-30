@@ -10,8 +10,9 @@ import Pocket from "./pages/Pocket";
 import Withdraw from "./pages/Withdraw";
 import Profile from "./pages/Profile";
 import TransferTo from "./pages/TransferTo";
-import TransferFrom from "./pages/TransferFrom"
-import Notification from "./pages/Notification"
+import TransferFrom from "./pages/TransferFrom";
+import Notification from "./pages/Notification";
+import TransferPocket from "./pages/TransferPocket"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,7 +23,15 @@ function App() {
         <Route exact path="/" element={<Homepage />} />
         <Route exact path="/SignIn" element={<SignIn />} />
         <Route exact path="/SignUp" element={<SignUp />} />
-        <Route exact path="/Notification" element={<Notification />} />
+        <Route
+          exact
+          path="/Notification"
+          element={
+            <RequireAuth>
+              <Notification />
+            </RequireAuth>
+          }
+        />
         <Route
           exact
           path="/AddPocket"
@@ -77,7 +86,7 @@ function App() {
             </RequireAuth>
           }
         />
-      <Route
+        <Route
           exact
           path="/TransferFrom"
           element={
@@ -86,8 +95,16 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route
+          exact
+          path="/TransferPocket"
+          element={
+            <RequireAuth>
+              <TransferPocket />
+            </RequireAuth>
+          }
+        />
       </Routes>
-     
     </BrowserRouter>
   );
 }

@@ -27,7 +27,7 @@ export default function NavigationBar() {
           console.log(er);
         }
       });
-  });
+  },[]);
   function NavbarItem() {
     if (auth == null) {
       return (
@@ -75,7 +75,7 @@ export default function NavigationBar() {
             </p>
           </Link>
           <div id="navbar-item-list-before-login" className="space-x-6">
-            <Link to={"/transfer"} className="font-jura font-medium">
+            <Link to={"/transferto"} className="font-jura font-medium">
               TRANSFER
             </Link>
             <Link to={"/withdraw"} className="font-jura font-medium">

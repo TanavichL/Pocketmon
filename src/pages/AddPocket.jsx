@@ -31,7 +31,7 @@ function AddPocket() {
   function RednderImage({ index }) {
     return (
       <img
-        className={`w-[180px] h-[156px] mt-5 ${
+        className={`cursor-pointer w-[180px] h-[156px] mt-5 ${
           selectIndex == index
             ? "border-[4px] rounded-2xl border-[#07636B]"
             : ""
@@ -47,7 +47,6 @@ function AddPocket() {
     const myObj = {}
     const newPocket = {}
     myObj["user_id"] = localStorage.getItem("user_id")
-    console.log(myObj["user_id"])
     newPocket[pocket_id] = {
       cloud_balance: 0,
       cloud_description: "New pocket item",
@@ -75,7 +74,7 @@ function AddPocket() {
         } catch (er) {
           console.log(er);
         }
-      });
+      }); 
   }
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
