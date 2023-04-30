@@ -28,6 +28,31 @@ function Notification() {
             st_status:{type:"pocket", status: "outcome"},
             st_amount: 800
         },
+        {
+            st_date: "2023-04-11",
+            st_status:{type:"pocket", status: "outcome"},
+            st_amount: 800
+        },
+        {
+            st_date: "2023-04-11",
+            st_status:{type:"pocket", status: "outcome"},
+            st_amount: 800
+        },
+        {
+            st_date: "2023-04-11",
+            st_status:{type:"pocket", status: "outcome"},
+            st_amount: 800
+        },
+        {
+            st_date: "2023-04-11",
+            st_status:{type:"pocket", status: "outcome"},
+            st_amount: 800
+        },
+        {
+            st_date: "2023-04-11",
+            st_status:{type:"pocket", status: "outcome"},
+            st_amount: 800
+        },
     ]
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
@@ -40,7 +65,7 @@ function Notification() {
                         <p className='font-jura text-[1.875vw]'>Notification</p>
                         <div className='h-1 w-[8rem] bg-[#07636B] rounded-[10px] ml-1'></div>
                     </div>
-                    <div className='flex flex-col w-full mt-5'>
+                    <div className='flex flex-col w-full mt-5 overflow-y-scroll h-[40rem]'>
                         {data.map((res, index) => {
                             return (
                                 <div key={index} className='w-full flex justify-between items-center border-b-[1px] border-[#D9D9D9] py-5 pr-6 2xl:px-20 lg:px-8'>

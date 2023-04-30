@@ -9,43 +9,6 @@ import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path"
 function Dashboard() {
-  var data = [
-    {
-      img: investment,
-      name: "investment",
-      amount: "8,000.00",
-    },
-    {
-      img: investment,
-      name: "investment",
-      amount: "8,000.00",
-    },
-    {
-      img: investment,
-      name: "investment",
-      amount: "8,000.00",
-    },
-    {
-      img: investment,
-      name: "food",
-      amount: "2,000.00",
-    },
-    {
-      img: investment,
-      name: "travel",
-      amount: "4,000.00",
-    },
-    {
-      img: investment,
-      name: "party",
-      amount: "10,000.00",
-    },
-    {
-      img: investment,
-      name: "investment",
-      amount: "8,000.00",
-    },
-  ];
   const [user, setUser] = useState(null)
   const [balances, setBalance] = useState(0)
   const [cashbox, setCashbox] = useState(0)
