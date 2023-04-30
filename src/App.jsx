@@ -22,7 +22,7 @@ function App() {
         <Route exact path="/" element={<Homepage />} />
         <Route exact path="/SignIn" element={<SignIn />} />
         <Route exact path="/SignUp" element={<SignUp />} />
-        <Route exact path="/Notification" element={<Notification />} />
+        <Route exact path="/Notification" element={<Notification />} />        
         <Route
           exact
           path="/AddPocket"

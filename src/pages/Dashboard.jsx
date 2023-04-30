@@ -78,12 +78,13 @@ function Dashboard() {
               return (
                 <Link
                 to={"/pocket"}
-                state={res}
+                state={{pocket: res}}
                   key={index}
+                  onClick={()=>{ localStorage.setItem("pocketIndex", index) }}
                   className="col-span-1 h-[15rem] rounded-xl shadow-king"
                 >
                   <div className="w-full rounded-lg">
-                    <img  src={`./src/assets/pocket-img${res.cloud_img}.png`} className="w-full" alt="" />
+                    <img src={`./src/assets/pocket-img-preview/cloud_preview_${res.cloud_img}.svg`} className="w-full" alt="" />
                   </div>
                   <div className="p-4">
                     <div className="text-[#8F8B8B] text-lg">{res.cloud_name}</div>

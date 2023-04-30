@@ -74,7 +74,7 @@ function AddPocket() {
         } catch (er) {
           console.log(er);
         }
-      });
+      }); 
   }
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
