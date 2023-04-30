@@ -103,7 +103,7 @@ function Pocket() {
               Total Balance : ฿{pocket.cloud_balance}.00
             </div>
           </div>
-          {pocket && pocket.cloud_statement.map((res, index) => {
+          {pocket.cloud_statement.length > 0 && pocket.cloud_statement.map((res, index) => {
             let res_statement = res[Object.keys(res)];
             if (res_statement.st_status.cashflow == 'income'){
               return (
