@@ -7,6 +7,7 @@ import header from "../assets/header-bg.svg";
 import income from "../assets/income.svg";
 import outcome from "../assets/outcome.svg";
 import footer from "../assets/footer-bg.svg";
+import { useLocation } from "react-router-dom";
 
 function Income() {
   return (
@@ -62,6 +63,12 @@ function Outcome() {
 
 function Pocket() {
   const [isEdit, setIsEdit] = useState(false);
+  const location = useLocation();
+  const pocket = location.state
+  if (pocket == null){
+    window.location.replace("/dashboard")
+  } 
+  console.log(pocket);
   const editHandler = () => {
     setIsEdit(!isEdit);
   };

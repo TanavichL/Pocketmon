@@ -13,6 +13,7 @@ import path from "../../path";
 function AddPocket() {
   const [isChecked, setIsChecked] = useState(false);
   const [cloudName, setCloudName] = useState("");
+  const [numimg, setNumimg] = useState(0);
   const router = useNavigate();
 
   const handleCheckboxChange = () => {
@@ -21,9 +22,11 @@ function AddPocket() {
   const [isSelected, setIsSelected] = useState(false);
   const [selectIndex, setSelectIndex] = useState();
   const handleSelectChange = (index) => {
+    setNumimg(index+1)
+    console.log(index+1);
     setIsSelected(isSelected);
     setSelectIndex(index);
-    console.log(selectIndex);
+    // console.log(selectIndex);
   };
   function RednderImage({ index }) {
     return (
@@ -58,7 +61,7 @@ function AddPocket() {
       pocket : {
         cloud_balance: 0,
         cloud_description: "New pocket item",
-        cloud_img: "new",
+        cloud_img: numimg.toString(),
         cloud_name: cloudName,
         cloud_lock: isChecked,
         cloud_statement: {},
