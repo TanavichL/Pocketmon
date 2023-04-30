@@ -21,6 +21,7 @@ function SignIn() {
         router('/dashboard')
       }catch(er){
         console.log(er)
+        alert('Incorrect Password')
       }
     })
     }

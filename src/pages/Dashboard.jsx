@@ -21,7 +21,6 @@ function Dashboard() {
       .then((res) => {
         try {
           setUser(res.data);
-          console.log(res.data);
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {
@@ -84,7 +83,7 @@ function Dashboard() {
             </Link>
           </div>
           <div className="grid grid-cols-3 h-[33rem] gap-8 mt-8 overflow-y-scroll">
-            {user &&
+            {user && user.pocket.length != 0 &&
               user.pocket.map((res, index) => {
                 return (
                   <Link
