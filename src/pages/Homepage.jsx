@@ -17,7 +17,7 @@ function Homepage() {
     tl.to(test, { x: 30, y: -70, duration: 6 });
   });
   return (
-    <div className="min-h-screen bg-[#E6F2FD]">
+    <div className="min-h-screen overflow-x-hidden bg-[#E6F2FD]">
       <NavigationBar />
       <div className="w-full min-h-screen">
         <div className="w-full flex justify-center items-center relative">
@@ -32,7 +32,7 @@ function Homepage() {
           />
           <div className="w-[85%] absolute">
             <div className="mb-[35rem]">
-              <p className="leading-[5rem] mb-[5rem] text-6xl font-lexend">
+              <p className="leading-[5rem] mb-[5rem] text-6xl font-lexend select-none">
                 Let's make <br />
                 Financial planning <br />
                 Starts here.
@@ -47,7 +47,7 @@ function Homepage() {
           </div>
           <img src={background} className="mt-[6rem] w-full" alt="" />
         </div>
-        <div className="w-full absolute flex justify-center">
+        <div className="w-full absolute flex justify-center z-10">
           <div className="w-[70%]">
             <div id="aboutus" className="absolute">
               <div className="text-4xl font-lexend w-40 border-b-4 pb-2 border-[#07636B]">
