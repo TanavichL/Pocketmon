@@ -9,9 +9,9 @@ import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
 function Dashboard() {
-  const [user, setUser] = useState(null);
-  const [balances, setBalance] = useState(0);
-  const [cashbox, setCashbox] = useState(0);
+const [user, setUser] = useState(null);
+const [balances, setBalance] = useState(0);
+const [cashbox, setCashbox] = useState(0);
 
   useEffect(() => {
     axios
