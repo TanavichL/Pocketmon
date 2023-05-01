@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from "../components/NavigationBar";
 import "../css/styles.css";
 import header from "../assets/header-bg2.svg";
@@ -6,6 +6,7 @@ import cash from "../assets/transfer-pocket-img/Cashbox.svg";
 import investment from "../assets/transfer-pocket-img/ivestment-transfer.svg";
 import axios from "axios";
 import path from "../../path";
+
 export default function TransferFrom() {
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -16,12 +17,55 @@ export default function TransferFrom() {
       .then((res) => {
         try {
           setUser(res.data);
-          console.log(res.data)
+          console.log(res.data);
         } catch (er) {
           console.log(er);
         }
       });
   }, []);
+
+  // const [isSelected, setIsSelected] = useState(false);
+  const [selectIndex, setSelectIndex] = useState();
+  const handleSelectChange = (index) => {
+    // setIsSelected(isSelected);
+    setSelectIndex(index);
+    console.log(selectIndex);
+  };
+  function RenderImage({ user,selectIndex, handleSelectChange }) {
+    return (
+      <div>
+        {user &&
+          user.pocket.map((res, index) => {
+            return (
+              <div
+                key={index}
+                className={`w-full flex space-x-5 shadow-king p-3 rounded-2xl ${
+                  selectIndex == index
+                    ? "border-[4px] rounded-2xl border-[#07636B]"
+                    : ""
+                }`}
+                onClick={() => handleSelectChange(index)}
+              >
+                <img
+                  src={`./src/assets/pocket-img-preview/cloud_preview_${res.cloud_img}.svg`}
+                  alt=""
+                />
+
+                <div className="font-jura font-bold flex flex-col ">
+                  <p className="text-gray-400 text-lg capitalize">
+                    {res.cloud_name}
+                  </p>
+                  <p className="text-[#2b5558] text-lg font-normal font-inter">
+                    ฿ {res.cloud_balance}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen  bg-[#F9F8F8]">
       <NavigationBar />
@@ -42,6 +86,7 @@ export default function TransferFrom() {
                 <p className="text-2xl font-jura">From</p>
               </div>
               <div className="flex space-x-4">
+
                 <div className="w-1/2 flex flex-col p-5 shadow-king space-y-3 rounded-[15px] drop-shadow-xl">
                   <div className="flex space-x-6">
                     <img src={cash} width={75} alt="" />
@@ -50,8 +95,12 @@ export default function TransferFrom() {
                       <p className="text-[#2b5558] text-lg">$ 2000</p>
                     </div>
                   </div>
-                  {user &&
-                  (<div className="font-jura">Account Number: x-xxx-{user.account_number.slice(-4)}</div>)}
+                  
+                  {user && (
+                    <div className="font-jura">
+                      Account Number: x-xxx-{user.account_number.slice(-4)}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="mt-5">
@@ -59,7 +108,8 @@ export default function TransferFrom() {
               </div>
 
               <div className="w-full grid grid-cols-2 gap-4">
-              {user &&
+                <RenderImage user={user} selectIndex={selectIndex} handleSelectChange={handleSelectChange}/>
+                {/* {user &&
               user.pocket.map((res, index) => {
                 return (
                 <div className="w-full flex space-x-5 shadow-king p-3 rounded-2xl">
@@ -69,8 +119,7 @@ export default function TransferFrom() {
                     <p className="text-[#2b5558] text-lg font-normal font-inter">฿ {res.cloud_balance}</p>
                   </div>
                 </div>)
-              })}
-              
+              })} */}
               </div>
             </div>
           </div>
