@@ -9,9 +9,10 @@ import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
 function Dashboard() {
-const [user, setUser] = useState(null);
-const [balances, setBalance] = useState(0);
-const [cashbox, setCashbox] = useState(0);
+  const [user, setUser] = useState(null);
+  const [balances, setBalance] = useState(0);
+  const [cashbox, setCashbox] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     axios
@@ -49,7 +50,7 @@ const [cashbox, setCashbox] = useState(0);
               Good Afternoon, {user.firstname}
             </p>
           )}
-          <div className="w-[32rem] h-[7rem] rounded-xl cursor-pointer translate-y-8 shadow-king py-4 px-8 flex justify-start items-center space-x-4 bg-white">
+          <div className="w-[32rem] h-[7rem] rounded-xl cursor-not-allowed translate-y-8 shadow-king py-4 px-8 flex justify-start items-center space-x-4 bg-white">
             <img src={logoCashBox} alt="" />
             <div className="">
               <p className="font-jura text-lg text-[#555555]">Cashbox</p>
@@ -57,7 +58,7 @@ const [cashbox, setCashbox] = useState(0);
                 ฿ {currencyFormat(cashbox)}
               </p>
               {user && (
-                <p className="font-jura text-sm">
+                <p className="font-jura text-sm flex">
                   Account Number: x-xxx-{user.account_number.slice(-4)}
                 </p>
               )}
@@ -83,7 +84,8 @@ const [cashbox, setCashbox] = useState(0);
             </Link>
           </div>
           <div className="grid grid-cols-3 h-[33rem] gap-8 mt-8 overflow-y-scroll">
-            {user && user.pocket.length != 0 &&
+            {user &&
+              user.pocket.length != 0 &&
               user.pocket.map((res, index) => {
                 return (
                   <Link

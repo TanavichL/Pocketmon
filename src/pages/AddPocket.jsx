@@ -64,7 +64,7 @@ function AddPocket() {
         cloud_img: numimg.toString(),
         cloud_name: cloudName,
         cloud_lock: isChecked,
-        cloud_statement: {},
+        cloud_statement: [],
       }
     })
       .then((res) => {
