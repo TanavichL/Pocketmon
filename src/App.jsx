@@ -12,7 +12,8 @@ import Profile from "./pages/Profile";
 import TransferTo from "./pages/TransferTo";
 import TransferFrom from "./pages/TransferFrom";
 import Notification from "./pages/Notification";
-import TransferPocket from "./pages/TransferPocket"
+import TransferPocket from "./pages/TransferPocket";
+import Achievement from "./pages/Achievement";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -101,6 +102,15 @@ function App() {
           element={
             <RequireAuth>
               <TransferPocket />
+            </RequireAuth>
+          }
+        />
+         <Route
+          exact
+          path="/Achievement"
+          element={
+            <RequireAuth>
+              <Achievement />
             </RequireAuth>
           }
         />
