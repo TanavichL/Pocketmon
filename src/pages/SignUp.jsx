@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar'
 import "../css/styles.css"
 import airplane from "../assets/airplane.svg"
@@ -16,6 +16,7 @@ function SignUp() {
   const [password, setPassword] = useState();
   const [confirm, setConfirm] = useState();
   const [validate, setValidate] = useState(false);
+  const router = useNavigate();
   function signupForm(){
     setValidate(false)
     if (password != confirm){
@@ -32,6 +33,9 @@ function SignUp() {
       imgProfile: ""
     }).then((res) => {
       alert(res.data)
+      if (res.data == "successfully"){
+        router('/signin')
+      }
     })
     }
   }

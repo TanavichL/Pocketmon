@@ -49,7 +49,7 @@ function Homepage() {
         </div>
         <div className="w-full absolute flex justify-center z-10">
           <div className="w-[70%]">
-            <div id="aboutus" className="absolute">
+            <div id="about" className="absolute">
               <div className="text-4xl font-lexend w-40 border-b-4 pb-2 border-[#07636B]">
                 About us
               </div>
