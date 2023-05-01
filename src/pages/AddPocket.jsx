@@ -53,7 +53,7 @@ function AddPocket() {
       cloud_img: "new",
       cloud_name: cloudName,
       cloud_lock: isChecked,
-      cloud_statement: {},
+      cloud_statement: [],
     };
     myObj["pocket"] = newPocket
     axios.post(`${path}/addpocket`, {
