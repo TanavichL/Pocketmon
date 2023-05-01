@@ -96,7 +96,7 @@ const [cashbox, setCashbox] = useState(0);
                     onClick={() => {
                       localStorage.setItem("pocketIndex", index);
                     }}
-                    className="col-span-1 h-[15rem] rounded-xl shadow-king"
+                    className="col-span-1 h-[14rem] rounded-xl shadow-king"
                   >
                     <div className="w-full rounded-lg">
                       <img
@@ -109,7 +109,7 @@ const [cashbox, setCashbox] = useState(0);
                       <div className="text-[#8F8B8B] text-lg">
                         {res.cloud_name}
                       </div>
-                      <div className="text-lg mt-8">
+                      <div className="text-lg mt-5">
                         ฿ {currencyFormat(res.cloud_balance)}
                       </div>
                     </div>

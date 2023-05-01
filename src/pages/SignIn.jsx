@@ -38,7 +38,7 @@ function SignIn() {
                 <input className='2xl:mt-6 lg:mt-4 w-full h-[2.5vw] pl-4 border border-[#B4B4B4] border-1 rounded-[10px] outline-none text-[0.78125vw]' placeholder='Password' type="password" onChange={(e) => { setPassword(e.target.value)}} />
             </form>
             <div className='w-full flex flex-col items-end mt-4 font-[700] text-[0.703125vw]'>
-                <a href='' className='text-[#7A7A7A] hover:text-[#07636B] duration-200 font-jura'>Forgot my password</a>
+                <Link to={'/forgot'} className='text-[#7A7A7A] hover:text-[#07636B] duration-200 font-jura'>Forgot my password</Link>
             </div>
             <button type='submit' onClick={login} className='w-full mt-7 bg-[#07636B] text-white font-[500] text-[0.78125vw] rounded-[10px] p-3 cursor-pointer'>
               SignIn
