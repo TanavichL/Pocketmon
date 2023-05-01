@@ -5,6 +5,7 @@ import "../css/styles.css"
 import bgProfile from "../assets/bg-profile.svg"
 import axios from 'axios'
 import path from '../../path'
+import moment from 'moment'
 
 function Profile() {
     const [visible, setVisible] = useState(true);
@@ -31,6 +32,9 @@ function Profile() {
             }
             })
         },[])
+    function CovertDate(date){
+        return moment(date).format("LL");
+    }
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
         <div className='h-full w-full flex justify-center'>
@@ -65,7 +69,7 @@ function Profile() {
                         </div>
                         <p className='text-[1.0416666666666667vw] font-jura'>Birthday</p>
                         <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#5a5a5a] border-1 rounded-[10px]'>
-                            <p className='text-[#626060]'>{birthday}</p>
+                            <p className='text-[#626060]'>{CovertDate(birthday)}</p>
                         </div>
                         <p className='text-[1.0416666666666667vw] font-jura'>Tel.</p>
                         <div className='flex items-center w-full text-[0.78125vw] h-[2.5vw] pl-4 border border-[#5a5a5a] border-1 rounded-[10px]'>
