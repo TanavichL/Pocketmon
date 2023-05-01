@@ -6,9 +6,9 @@ import cash from "../assets/transfer-pocket-img/Cashbox.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import path from "../../path";
+
 export default function TransferFrom() {
   const [user, setUser] = useState(null);
-  const [selectIndex, setSelectIndex] = useState(0);
   const [selectPocket, setSelectPocket] = useState(null);
   const amount = parseInt(localStorage.getItem("amount"));
   const pocketDestination = localStorage.getItem("pocketIndex");
@@ -27,6 +27,50 @@ export default function TransferFrom() {
         }
       });
   }, []);
+
+  // const [isSelected, setIsSelected] = useState(false);
+  const [selectIndex, setSelectIndex] = useState(0);
+  const handleSelectChange = (index) => {
+    // setIsSelected(isSelected);
+    setSelectIndex(index);
+    console.log(selectIndex);
+  };
+  function RenderImage({ user,selectIndex, handleSelectChange }) {
+    return (
+      <div className="w-full grid grid-cols-2 gap-4">
+        {user &&
+          user.pocket.map((res, index) => {
+            return (
+              <div
+                key={index}
+                className={`w-full flex space-x-5 shadow-king p-3 rounded-2xl ${
+                  selectIndex == index
+                    ? "border-[4px] rounded-2xl border-[#07636B]"
+                    : ""
+                }`}
+                onClick={() => handleSelectChange(index)}
+              >
+                <img
+                  src={`./src/assets/pocket-img-preview/cloud_preview_${res.cloud_img}.svg`}
+                  alt=""
+                  className="border border-red-200 w-[5rem] h-[4.5rem] object-cover rounded-xl"
+                />
+
+                <div className="font-jura font-bold flex flex-col ">
+                  <p className="text-gray-400 text-lg capitalize">
+                    {res.cloud_name}
+                  </p>
+                  <p className="text-[#2b5558] text-lg font-normal font-inter">
+                    ฿ {res.cloud_balance}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    );
+  }
+
   function transferFromCashbox(){
     if (selectPocket.cloud_balance < amount) {
         alert("Insufficient Funds");
@@ -150,7 +194,11 @@ export default function TransferFrom() {
                     setSelectIndex(137);
                     setSelectPocket(user.cashbox)
                   }}
-                  className="w-1/2 flex flex-col p-5 shadow-king space-y-3 rounded-[15px] drop-shadow-xl"
+                  className={`w-1/2 flex flex-col p-5 shadow-king space-y-3 rounded-[15px] drop-shadow-xl ${
+                    selectIndex == 137
+                      ? "border-[4px] rounded-2xl border-[#07636B]"
+                      : ""
+                  }`}
                 >
                   <div className="flex space-x-6">
                     <img src={cash} width={75} alt="" />
@@ -171,35 +219,7 @@ export default function TransferFrom() {
               </div>
 
               <div className="w-full grid grid-cols-2 gap-4">
-                {user &&
-                  user.pocket.map((res, index) => {
-                    if (index != pocketDestination) {
-                      return (
-                        <div
-                          onClick={() => {
-                            setSelectIndex(index);
-                            setSelectPocket(res);
-                          }}
-                          key={index}
-                          className="w-full flex space-x-5 shadow-king p-3 rounded-2xl"
-                        >
-                          <img
-                            src={`./src/assets/pocket-img-preview/cloud_preview_${res.cloud_img}.svg`}
-                            className="border border-red-200 w-[5rem] h-[4.5rem] object-cover rounded-xl"
-                            alt=""
-                          />
-                          <div className="font-jura font-bold flex flex-col ">
-                            <p className="text-gray-400 text-lg capitalize">
-                              {res.cloud_name}
-                            </p>
-                            <p className="text-[#2b5558] text-lg font-normal font-inter">
-                              ฿ {res.cloud_balance}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    }
-                  })}
+                <RenderImage user={user} selectIndex={selectIndex} handleSelectChange={handleSelectChange}/>
               </div>
             </div>
           </div>
