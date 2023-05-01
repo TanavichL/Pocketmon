@@ -202,7 +202,7 @@ function Pocket() {
         </div>
       </div>
 
-      <img src={footer} className="w-full absolute"></img>
+      {/* <img src={footer} className="w-full absolute"></img> */}
     </div>
   );
 }

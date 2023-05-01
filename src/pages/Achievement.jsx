@@ -42,8 +42,8 @@ function Achievement() {
         <div className='h-full w-full flex justify-center'>
             <img src={bgAchievement} className="w-full absolute" alt="" />
             <NavigationBar />
-            <div className='w-full h-screen flex justify-center items-center'>
-                <div className="relative flex flex-col bg-white w-[60%] rounded-[20px] shadow-king">
+            <div className='w-full h-screen flex justify-center items-center mb-20'>
+                <div className="relative flex flex-col mt-44  bg-white w-[60%] rounded-[20px] shadow-king">
                     <div className='flex justify-between items-center border-b-2 2xl:px-20 lg:px-8 pt-12 pb-6'>
                         <p className='font-jura text-[1.875vw]'>Achievement</p>
                         <div className='w-[13%] rounded-full box-shadow-3d flex bg-[#F3F3F3]'>
