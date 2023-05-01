@@ -12,6 +12,7 @@ function Dashboard() {
   const [user, setUser] = useState(null);
   const [balances, setBalance] = useState(0);
   const [cashbox, setCashbox] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     axios
@@ -21,7 +22,6 @@ function Dashboard() {
       .then((res) => {
         try {
           setUser(res.data);
-          console.log(res.data);
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {
@@ -50,7 +50,7 @@ function Dashboard() {
               Good Afternoon, {user.firstname}
             </p>
           )}
-          <div className="w-[32rem] h-[7rem] rounded-xl cursor-pointer translate-y-8 shadow-king py-4 px-8 flex justify-start items-center space-x-4 bg-white">
+          <div className="w-[32rem] h-[7rem] rounded-xl cursor-not-allowed translate-y-8 shadow-king py-4 px-8 flex justify-start items-center space-x-4 bg-white">
             <img src={logoCashBox} alt="" />
             <div className="">
               <p className="font-jura text-lg text-[#555555]">Cashbox</p>
@@ -58,7 +58,7 @@ function Dashboard() {
                 ฿ {currencyFormat(cashbox)}
               </p>
               {user && (
-                <p className="font-jura text-sm">
+                <p className="font-jura text-sm flex">
                   Account Number: x-xxx-{user.account_number.slice(-4)}
                 </p>
               )}
@@ -85,6 +85,7 @@ function Dashboard() {
           </div>
           <div className="grid grid-cols-3 h-[33rem] gap-8 mt-8 overflow-y-scroll">
             {user &&
+              user.pocket.length != 0 &&
               user.pocket.map((res, index) => {
                 return (
                   <Link
@@ -94,7 +95,7 @@ function Dashboard() {
                     onClick={() => {
                       localStorage.setItem("pocketIndex", index);
                     }}
-                    className="col-span-1 h-[15rem] rounded-xl shadow-king"
+                    className="col-span-1 h-[14rem] rounded-xl shadow-king"
                   >
                     <div className="w-full rounded-lg">
                       <img
@@ -107,7 +108,7 @@ function Dashboard() {
                       <div className="text-[#8F8B8B] text-lg">
                         {res.cloud_name}
                       </div>
-                      <div className="text-lg mt-8">
+                      <div className="text-lg mt-5">
                         ฿ {currencyFormat(res.cloud_balance)}
                       </div>
                     </div>

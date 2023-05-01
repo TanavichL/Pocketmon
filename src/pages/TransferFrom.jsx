@@ -1,13 +1,18 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from "../components/NavigationBar";
 import "../css/styles.css";
 import header from "../assets/header-bg2.svg";
 import cash from "../assets/transfer-pocket-img/Cashbox.svg";
-import investment from "../assets/transfer-pocket-img/ivestment-transfer.svg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import path from "../../path";
 export default function TransferFrom() {
   const [user, setUser] = useState(null);
+  const [selectIndex, setSelectIndex] = useState(0);
+  const [selectPocket, setSelectPocket] = useState(null);
+  const amount = parseInt(localStorage.getItem("amount"));
+  const pocketDestination = localStorage.getItem("pocketIndex");
+  const router = useNavigate();
   useEffect(() => {
     axios
       .post(`${path}/getUser`, {
@@ -16,12 +21,106 @@ export default function TransferFrom() {
       .then((res) => {
         try {
           setUser(res.data);
-          console.log(res.data)
+          console.log(res.data);
         } catch (er) {
           console.log(er);
         }
       });
   }, []);
+  function transferFromCashbox(){
+    if (selectPocket.cloud_balance < amount) {
+        alert("Insufficient Funds");
+      } else {
+        axios
+          .post(`${path}/transfercashtopocket`, {
+            user_id: user.user_id,
+            pocket_recipient_index: parseInt(pocketDestination),
+            cash: amount,
+            stateRecipient: {
+              a2b3c4e6f8z0: {
+                st_amount: amount,
+                st_date: new Date().toString(),
+                st_status: {
+                  cashflow: "income",
+                  type: "pocket",
+                },
+              },
+            },
+            stateTransfer: {
+              jz8f6e4c3b2a: {
+                st_amount: amount,
+                st_date: new Date().toString(),
+                st_status: {
+                  cashflow: "outcome",
+                  type: "pocket",
+                },
+              },
+            },
+          })
+          .then((res) => {
+            try {
+              console.log(res.data);
+              localStorage.removeItem("amount");
+              localStorage.removeItem("pocketIndex");
+              router("/dashboard");
+            } catch (er) {
+              console.log(er);
+            }
+          });
+      }
+  }
+  function transferFromPocket() {
+    if (selectPocket.balance < amount) {
+      alert("Insufficient Funds");
+    } else {
+      axios
+        .post(`${path}/transfermypocket`, {
+          user_id: user.user_id,
+          pocket_transfer_index: parseInt(selectIndex),
+          pocket_recipient_index: parseInt(pocketDestination),
+          cash: amount,
+          stateRecipient: {
+            a2b3c4e6f8z0: {
+              st_amount: amount,
+              st_date: new Date().toString(),
+              st_status: {
+                cashflow: "income",
+                type: "pocket",
+              },
+            },
+          },
+          stateTransfer: {
+            jz8f6e4c3b2a: {
+              st_amount: amount,
+              st_date: new Date().toString(),
+              st_status: {
+                cashflow: "outcome",
+                type: "pocket",
+              },
+            },
+          },
+        })
+        .then((res) => {
+          try {
+            console.log(res.data);
+            localStorage.removeItem("amount");
+            localStorage.removeItem("pocketIndex");
+            router("/dashboard");
+          } catch (er) {
+            console.log(er);
+          }
+        });
+    }
+  }
+  function transferForm() {
+    if (confirm("Are you sure to transfer from this pocket")) {
+      if (selectIndex == 137) {
+        transferFromCashbox();
+      } else {
+        transferFromPocket();
+      }
+    }
+  }
   return (
     <div className="min-h-screen  bg-[#F9F8F8]">
       <NavigationBar />
@@ -31,7 +130,10 @@ export default function TransferFrom() {
           <div className="flex justify-center items-center border border-1 w-full h-[5rem] rounded-t-[15px]">
             <div className="w-11/12 flex justify-between items-center">
               <div className="font-jura text-[30px]">Transfer</div>
-              <button className="bg-[#07636B] h-8 w-24 text-white font-jura rounded-lg">
+              <button
+                onClick={transferForm}
+                className="bg-[#07636B] h-8 w-24 text-white font-jura rounded-lg"
+              >
                 Confirm
               </button>
             </div>
@@ -42,35 +144,62 @@ export default function TransferFrom() {
                 <p className="text-2xl font-jura">From</p>
               </div>
               <div className="flex space-x-4">
-                <div className="w-1/2 flex flex-col p-5 shadow-king space-y-3 rounded-[15px] drop-shadow-xl">
+                {user &&(
+                <div
+                  onClick={() => {
+                    setSelectIndex(137);
+                    setSelectPocket(user.cashbox)
+                  }}
+                  className="w-1/2 flex flex-col p-5 shadow-king space-y-3 rounded-[15px] drop-shadow-xl"
+                >
                   <div className="flex space-x-6">
                     <img src={cash} width={75} alt="" />
                     <div className="font-jura font-bold flex flex-col ">
                       <p className="text-gray-400 text-xl">Cashbox</p>
-                      <p className="text-[#2b5558] text-lg">$ 2000</p>
+                      <p className="text-[#2b5558] text-lg">฿ {user.cashbox.balance}</p>
                     </div>
                   </div>
-                  {user &&
-                  (<div className="font-jura">Account Number: x-xxx-{user.account_number.slice(-4)}</div>)}
-                </div>
+                  {user && (
+                    <div className="font-jura">
+                      Account Number: x-xxx-{user.account_number.slice(-4)}
+                    </div>
+                  )}
+                </div>)}
               </div>
               <div className="mt-5">
                 <p className="text-2xl font-jura">Or</p>
               </div>
 
               <div className="w-full grid grid-cols-2 gap-4">
-              {user &&
-              user.pocket.map((res, index) => {
-                return (
-                <div className="w-full flex space-x-5 shadow-king p-3 rounded-2xl">
-                  <img src={`./src/assets/pocket-img-preview/cloud_preview_${res.cloud_img}.svg`} alt="" />
-                  <div className="font-jura font-bold flex flex-col ">
-                    <p className="text-gray-400 text-lg capitalize">{res.cloud_name}</p>
-                    <p className="text-[#2b5558] text-lg font-normal font-inter">฿ {res.cloud_balance}</p>
-                  </div>
-                </div>)
-              })}
-              
+                {user &&
+                  user.pocket.map((res, index) => {
+                    if (index != pocketDestination) {
+                      return (
+                        <div
+                          onClick={() => {
+                            setSelectIndex(index);
+                            setSelectPocket(res);
+                          }}
+                          key={index}
+                          className="w-full flex space-x-5 shadow-king p-3 rounded-2xl"
+                        >
+                          <img
+                            src={`./src/assets/pocket-img-preview/cloud_preview_${res.cloud_img}.svg`}
+                            className="border border-red-200 w-[5rem] h-[4.5rem] object-cover rounded-xl"
+                            alt=""
+                          />
+                          <div className="font-jura font-bold flex flex-col ">
+                            <p className="text-gray-400 text-lg capitalize">
+                              {res.cloud_name}
+                            </p>
+                            <p className="text-[#2b5558] text-lg font-normal font-inter">
+                              ฿ {res.cloud_balance}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
               </div>
             </div>
           </div>

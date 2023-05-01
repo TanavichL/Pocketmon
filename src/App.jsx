@@ -14,6 +14,7 @@ import TransferFrom from "./pages/TransferFrom";
 import Notification from "./pages/Notification";
 import TransferPocket from "./pages/TransferPocket";
 import Achievement from "./pages/Achievement";
+import ForgotPassword from "./pages/ForgotPassword"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/" element={<Homepage />} />
         <Route exact path="/SignIn" element={<SignIn />} />
         <Route exact path="/SignUp" element={<SignUp />} />
+        <Route exact path="/forgot" element={<ForgotPassword />} />
         <Route
           exact
           path="/Notification"
