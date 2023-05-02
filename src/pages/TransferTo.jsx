@@ -4,6 +4,8 @@ import "../css/styles.css";
 import header from "../assets/header-bg2.svg";
 import user from "../assets/profile-icon.svg";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 export default function TransferTo() {
   return (
     <div className="min-h-screen  bg-[#F9F8F8]">

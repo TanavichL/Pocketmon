@@ -9,7 +9,7 @@ import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
 import { Chart } from "react-google-charts";
-
+import randomColor from "randomcolor";
 
 function Dashboard() {
   const [user, setUser] = useState(null);
@@ -38,6 +38,20 @@ function Dashboard() {
         }
       });
   }, []);
+  
+
+
+
+  const colors = ["#FFD1DC","#ADD8E6","#B19CD9","#77DD77","#FFFFE0","#FFB347","#CFCFC4","#FFE5B4","#E6E6FA","#98FB98"]
+  
+  let data = [["Clound" , "Balance"],];
+  data.push(["Cashbox", cashbox])
+
+  user &&
+    user.pocket.forEach((element) => {
+      data.push([element.cloud_name, element.cloud_balance]);
+    });
+
   // console.log(balances);
   function currencyFormat(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -134,21 +148,24 @@ function Dashboard() {
               </p>
             )}
           </div>
-
-          <div className="flex w-full h-[20rem] py-4 px-6 rounded-2xl shadow-king bg-white justify-center">
-            <div className="border border-red-600">
-            <Chart
-              chartType="PieChart"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ['Task', 'Balance'],
-                ["test",6000],
-                ["test4",16000]
-              ]}
-              width={'100%'}
-              height={'100%'}
-            />
+          
+          <div className="flex flex-col w-full h-[20rem] py-4 px-6 rounded-2xl shadow-king bg-white justify-center">
+            <div className="flex flex-col w-full pt-3">
+          <p className="text-2xl w-full font-jura font-bold text-[#07636B]">
+              Balance Ratio
+            </p>
+            <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
             </div>
+
+                <Chart
+                  chartType="PieChart"
+                
+                  loader={<div>Loading Chart</div>}
+                  options={{ is3D: false , backgroundColor: 'transparent', colors: colors,}}
+                  data={data}
+                  width={'100%'}
+                  height={'100%'}
+                />
           </div>
 
 
