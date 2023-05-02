@@ -33,7 +33,13 @@ function Profile() {
             })
         },[])
     function CovertDate(date){
-        return moment(date).format("LL");
+        var front = "";
+        var mid = ""
+        var back = "";
+        front = date.slice(3, 5)
+        mid = date.slice(0, 2)
+        back = date.slice(6, 10)
+        return moment(front+"-"+mid+"-"+back).format("LL");
     }
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
