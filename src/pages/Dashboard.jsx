@@ -9,7 +9,6 @@ import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
 import { Chart } from "react-google-charts";
-import randomColor from "randomcolor";
 
 function Dashboard() {
   const [user, setUser] = useState(null);

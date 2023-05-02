@@ -22,3 +22,10 @@
     background-size: cover;
     background-position: 0 -3rem;
 }
+
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }

@@ -38,7 +38,7 @@ function Countdown() {
 function Withdraw() {
     const [user ,setUser ] = useState([]);
     const [phone ,setPhone ] = useState(""); 
-    const [ amount, setAmount ] = useState(20);         
+    const [ amount, setAmount ] = useState(0);         
     const [ qrCode ,setqrCode ] = useState("");
 
     useEffect(()=>{
@@ -60,8 +60,10 @@ function Withdraw() {
 
     function handleAmount(e) {
         setAmount(parseFloat(e.target.value));
-        
+        if (amount <= 0) {
+            setAmount(0)
       }
+    }
       console.log(amount)
     
     function handleQR(tel) {
@@ -87,16 +89,7 @@ function Withdraw() {
                 กรุณาทำการชำระเงินภายใน
               </div>
               <Countdown/>
-              <p className="text-lg ">Amount</p>
-                <div className="relative mt-2">
-                  <input
-                    type="number"
-                    className="w-full border rounded border-gray-300 p-2 outline-none"
-                    value={amount}
-                    onChange={handleAmount}
-                  />
-                  <p className="absolute right-4 top-1.5 text-xl text-gray-400">THB</p>
-                </div>
+
               <div className=" justify-between mt-40">
                 
                 
