@@ -81,7 +81,7 @@ function Withdraw() {
           <div className="flex items-center border border-1 w-[60rem] h-[5rem] rounded-t-[15px]">
             <div className="font-jura text-[30px] ml-10">WITHDRAW</div>
           </div>
-          <div className="flex justify-center items-center mt-10">
+          <div className="w-full flex justify-center items-center mt-10">
             {/* <img src={qr} className=" w-60 border border-1 p-2"></img> */}
             <QRCode style={{width:"30%",height:"30%",marginRight:"20px"}} value={qrCode} />
             <div className="flex flex-col pl-10">
@@ -89,12 +89,11 @@ function Withdraw() {
                 กรุณาทำการชำระเงินภายใน
               </div>
               <Countdown/>
-
-              <div className=" justify-between mt-40">
-                
+               
+              <div className="flex justify-between mt-40">
                 
                 <button
-                className="border rounded-[10px] bg-[#07636B] w-36 h-10 ml-20 font-jura text-white" onClick={() => handleQR(user.tel,amount)}>
+                className="border rounded-[10px] bg-[#07636B] w-36 h-10 font-jura text-white" onClick={() => handleQR(user.tel,amount)}>
                   Generate
                 </button>
                 

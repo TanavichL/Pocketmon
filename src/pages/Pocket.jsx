@@ -5,13 +5,15 @@ import NavigationBar from "../components/NavigationBar";
 import header from "../assets/header-bg.svg";
 import income from "../assets/income.svg";
 import outcome from "../assets/outcome.svg";
-import footer from "../assets/footer-bg.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import path from "../../path";
+import moment from 'moment/moment'
 
 function Pocket() {
   const [isEdit, setIsEdit] = useState(false);
+  const [namePocket, setNamePocket] = useState('')
+  const [description, setDescription] = useState('')
   const location = useLocation();
   const { pocket } = location.state;
   console.log(pocket);
@@ -33,16 +35,16 @@ function Pocket() {
         <div className=" w-[60rem] h-[19rem] bg-white rounded-[15px] px-10 py-10 drop-shadow-xl mt-44">
           <div className="flex">
             <img
-              className="rounded-full w-48 h-48 ml-10"
+              className="rounded-full w-60 h-60 ml-10"
               src={`./src/assets/pocket-img${pocket.cloud_img}.png`}
             ></img>
             <div className="flex-col">
               <div className="flex flex-row relative">
-                <p className="font-jura text-[20px] ml-36 capitalize">
+                <p className="font-inter text-xl ml-20 capitalize">
                   Cloud Pocket’s Name
                 </p>
                 {!isEdit ? (
-                  <div className="flex flex-row ">
+                  <div className="flex ">
                     <Link
                       to={"/transferpocket"}
                       state={{ pocket: pocket }}
@@ -87,7 +89,21 @@ function Pocket() {
                       Delete
                     </button>
                     <button
-                      onClick={editHandler}
+                      onClick={() => {
+                        editHandler();
+                        axios.post(`${path}/editpocket`, {
+                          user_id: 0,
+                          indexPocket: 0,
+                          pocket: {
+                            cloud_balance: pocket.cloud_balance,
+                            cloud_description: description,
+                            cloud_img: pocket.cloud_img,
+                            cloud_lock: pocket.cloud_lock,
+                            cloud_name: namePocket,
+                            cloud_statement: pocket.cloud_statement,
+                          },
+                        });
+                      }}
                       className="border border-blue ml-2 flex justify-center items-center text-center bg-[#A9A9A9] text-white rounded-lg w-24 h-8  "
                     >
                       Cancel
@@ -98,7 +114,7 @@ function Pocket() {
               {!isEdit ? (
                 <p
                   id="name"
-                  className="text-2xl font-bold font-jura capitalize ml-36"
+                  className="text-3xl font-medium py-1.5 font-inter capitalize ml-20"
                 >
                   {pocket.cloud_name}
                 </p>
@@ -106,17 +122,17 @@ function Pocket() {
                 <input
                   type="text"
                   id="name"
-                  className="font-jura border border-[#B4B4B4] rounded-[10px] outline-none text-[18px] ml-36 px-2 py-1"
+                  className="font-jura border border-[#B4B4B4] rounded-[10px] outline-none text-[18px] ml-20 px-2 py-1"
                   placeholder={pocket.cloud_name}
                 />
               )}
 
-              <p className="font-inter text-xl py-2 ml-36">
-                ฿ {pocket.cloud_balance}
+              <p className="font-inter text-xl py-2 ml-20">
+                ฿ {pocket.cloud_balance}.00
               </p>
 
               {!isEdit ? (
-                <p id="description" className="font-jura text-[15px] ml-36">
+                <p id="description" className="font-jura text-[15px] ml-20">
                   Our team is made up of experienced software developers, and
                   customer support specialists. We work closely together to
                   create innovative solutions that simplify the process of
@@ -126,7 +142,7 @@ function Pocket() {
                 <textarea
                   type="text"
                   id="description"
-                  className="font-jura text-[15px] w-[20rem] ml-36 border border-[#B4B4B4] rounded-[10px] outline-none px-2 py-1"
+                  className="font-jura text-[15px] w-[20rem] ml-20 border border-[#B4B4B4] rounded-[10px] outline-none px-2 py-1"
                   placeholder=""
                 />
               )}
@@ -158,7 +174,7 @@ function Pocket() {
                           Money Moved Successfully
                         </div>
                         <div className="font-lexend text-[15px] text-gray-500 ml-10">
-                          Date : {res_statement.st_date.slice(-12)}
+                          Date : {moment(res_statement.st_date).format('LLLL')}
                         </div>
                       </div>
 
@@ -185,7 +201,7 @@ function Pocket() {
                           Money Moved Successfully
                         </div>
                         <div className="font-lexend text-[15px] text-gray-500 ml-10">
-                          Date : {res_statement.st_date.slice(-12)}
+                          Date : {moment(res_statement.st_date).format('LLLL')}
                         </div>
                       </div>
 
