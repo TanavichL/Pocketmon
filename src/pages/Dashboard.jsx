@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Component } from "react";
 import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import logoCashBox from "../assets/logo-cashbox.svg";
@@ -8,6 +8,9 @@ import investment from "../assets/investment_cloud.svg";
 import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
+import { Chart } from "react-google-charts";
+
+
 function Dashboard() {
   const [user, setUser] = useState(null);
   const [balances, setBalance] = useState(0);
@@ -118,6 +121,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="w-[40%] space-y-12">
+
           {/* Account balance */}
           <div className="w-full h-[10rem] py-4 px-6 rounded-2xl shadow-king bg-white">
             <p className="text-2xl font-jura font-bold text-[#07636B]">
@@ -130,6 +134,25 @@ function Dashboard() {
               </p>
             )}
           </div>
+
+          <div className="flex w-full h-[20rem] py-4 px-6 rounded-2xl shadow-king bg-white justify-center">
+            <div className="border border-red-600">
+            <Chart
+              chartType="PieChart"
+              loader={<div>Loading Chart</div>}
+              data={[
+                ['Task', 'Balance'],
+                ["test",6000],
+                ["test4",16000]
+              ]}
+              width={'100%'}
+              height={'100%'}
+            />
+            </div>
+          </div>
+
+
+          
           {/* Recent */}
           <div className="w-full py-4 px-6 rounded-2xl shadow-king bg-white">
             <p className="text-2xl font-jura font-bold text-[#07636B]">
