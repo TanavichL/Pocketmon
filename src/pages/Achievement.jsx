@@ -25,10 +25,12 @@ function Achievement() {
                     cash += element.cloud_balance;
                     // console.log(balances);
                 });
+                // console.log(cash);
                 setBalance(cash);
+                // console.log(res.data.cashbox.balance);
                 setCashbox(res.data.cashbox.balance)
                 let num = 0
-                num = ((balances + cashbox) - (balances + cashbox) % 1000) / 1000
+                num = ((cash + res.data.cashbox.balance) - (cash + res.data.cashbox.balance) % 1000) / 1000
                 setWater(num)
                 setUser(res.data)
             } catch (er) {
