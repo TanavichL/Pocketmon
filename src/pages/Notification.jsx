@@ -63,7 +63,7 @@ function Notification() {
                                 (<img src={img_income} alt="" />)
                                 :(<img src={img_outcome} alt="" />)}
                                 <div className='flex flex-col space-y-1'>
-                                    <p className='text-[0.8203125vw] font-[700] text-[#243747] font-lexend'>Money Moved Successfully</p>
+                                    <p className='text-[0.8203125vw] font-[700] text-[#243747] font-lexend'>Money Moved from Successfully</p>
                                     <p className='text-[0.703125vw] font-[500] text-[#918F8F]'>{moment(res[Object.keys(res)].st_date).format('LLLL')}</p>
                                 </div>
                             </div>
