@@ -15,6 +15,7 @@ import Notification from "./pages/Notification";
 import TransferPocket from "./pages/TransferPocket";
 import Achievement from "./pages/Achievement";
 import ForgotPassword from "./pages/ForgotPassword"
+import TransferAccount from "./pages/TransferAccount"
 
 
 
@@ -115,6 +116,15 @@ function App() {
           element={
             <RequireAuth>
               <Achievement />
+            </RequireAuth>
+          }
+        />
+         <Route
+          exact
+          path="/TransferAccount"
+          element={
+            <RequireAuth>
+              <TransferAccount />
             </RequireAuth>
           }
         />
