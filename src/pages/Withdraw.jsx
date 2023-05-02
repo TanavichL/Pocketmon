@@ -32,8 +32,8 @@ function Withdraw() {
     <div className="min-h-screen bg-[#F9F8F8]">
       <NavigationBar />
       <img src={header} className="w-full absolute" alt="" />
-      <div className="relative flex justify-center items-center h-full flex-col">
-        <div className=" w-[60rem] h-[32rem] bg-white rounded-[15px] drop-shadow-xl mt-44 mb-20">
+      <div className="relative flex justify-center items-center h-screen flex-col">
+        <div className=" w-[60rem] h-[32rem] bg-white rounded-[15px] drop-shadow-xl">
           <div className="flex items-center border border-1 w-[60rem] h-[5rem] rounded-t-[15px]">
             <div className="font-jura text-[30px] ml-10">WITHDRAW</div>
           </div>

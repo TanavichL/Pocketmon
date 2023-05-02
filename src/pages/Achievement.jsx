@@ -58,7 +58,7 @@ function Achievement() {
                             </div>
                         </div>
                     </div>
-                    <div id='tree-bg' className='2xl:px-20 lg:px-8 py-12 flex flex-col items-center space-y-4 2xl:space-y-9'>
+                    <div id='tree-bg' className='2xl:px-20 lg:px-8 py-12 flex flex-col items-center space-y-4 2xl:space-y-6'>
                         <p className='font-lexend text-[1.6666666666666667vw] font-[400] text-[#385872]'>My plant</p>
                         <p className='text-[0.9375vw] text-[#C4C4C4] font-[400]'>Every 1000 ฿ in your account. You will receive 1 water per month </p>
                         <div className='doughnut-bar'>
