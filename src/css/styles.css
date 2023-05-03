@@ -19,8 +19,8 @@
 #tree-bg{
     background-image: url("../assets/bg-tree.svg");
     background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover;
-    background-position: 0 -3rem;
 }
 .doughnut-bar {
     width: 213px;

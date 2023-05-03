@@ -48,8 +48,8 @@ function Achievement() {
             <img src={bgAchievement} className="w-full absolute" alt="" />
             <NavigationBar />
             <div className='w-full h-screen flex justify-center items-center'>
-                <div className="relative flex flex-col bg-white w-[60%] rounded-[20px] shadow-king">
-                    <div className='flex justify-between items-center border-b-2 2xl:px-20 lg:px-8 2xl:pt-12 pt-10 pb-6'>
+                <div className="relative flex flex-col bg-white w-[60rem] mt-44 mb-24 rounded-[20px] shadow-king">
+                    <div className='flex justify-between items-center border-b-2 2xl:px-20 lg:px-8 2xl:pt-8 pt-6 pb-6'>
                         <p className='font-jura text-[1.875vw]'>Achievement</p>
                         <div className='w-[13%] rounded-full box-shadow-3d flex bg-[#F3F3F3]'>
                             <img className='h-full' src={imgwater} alt="" />
@@ -60,7 +60,7 @@ function Achievement() {
                     </div>
                     <div id='tree-bg' className='2xl:px-20 lg:px-8 py-12 flex flex-col items-center space-y-4 2xl:space-y-6'>
                         <p className='font-lexend text-[1.6666666666666667vw] font-[400] text-[#385872]'>My plant</p>
-                        <p className='text-[0.9375vw] text-[#C4C4C4] font-[400]'>Every 1000 ฿ in your account. You will receive 1 water per month </p>
+                        <p className='text-[0.9375vw] text-[#C4C4C4] text-center font-[400]'>Every 1000 ฿ in your account. <br/>You will receive 1 water per month </p>
                         <div className='doughnut-bar'>
                             <div className='doughnut-bar-fill' style={{height: `${percentage}%`}}></div>
                             <div className="doughnut-bar-image"></div>
