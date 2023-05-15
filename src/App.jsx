@@ -17,10 +17,12 @@ import Achievement from "./pages/Achievement";
 import ForgotPassword from "./pages/ForgotPassword"
 import TransferAccount from "./pages/TransferAccount"
 
+
+
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
+
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Homepage />} />
@@ -127,6 +129,7 @@ function App() {
           }
         />
       </Routes>
+
     </BrowserRouter>
   );
 }

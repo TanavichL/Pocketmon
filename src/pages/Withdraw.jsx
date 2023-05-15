@@ -38,7 +38,7 @@ function Countdown() {
 function Withdraw() {
     const [user ,setUser ] = useState([]);
     const [phone ,setPhone ] = useState(""); 
-    const [ amount, setAmount ] = useState(20);         
+    const [ amount, setAmount ] = useState(0);         
     const [ qrCode ,setqrCode ] = useState("");
 
     useEffect(()=>{
@@ -60,8 +60,10 @@ function Withdraw() {
 
     function handleAmount(e) {
         setAmount(parseFloat(e.target.value));
-        
+        if (amount <= 0) {
+            setAmount(0)
       }
+    }
       console.log(amount)
     
     function handleQR(tel) {

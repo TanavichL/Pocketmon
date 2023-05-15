@@ -16,6 +16,8 @@ function Pocket() {
   const [description, setDescription] = useState('')
   const location = useLocation();
   const { pocket } = location.state;
+  const [pocketIndex, setPocketIndex] = useState(parseInt(localStorage.getItem("pocketIndex")))
+
   console.log(pocket);
   // console.log(pocket.cloud_statement[1])
   // console.log(pocket.cloud_statement[0][Object.keys(pocket.cloud_statement[0])])
@@ -25,6 +27,16 @@ function Pocket() {
   const editHandler = () => {
     setIsEdit(!isEdit);
   };
+
+  const nameHandler = (e) => {
+    setNamePocket(e.target.value)
+    console.log(namePocket)
+  }
+  const descriptionHandler = (e) => {
+    setDescription(e.target.value)
+    console.log(description)
+  }
+
   const router = useNavigate();
 
   return (
@@ -91,9 +103,10 @@ function Pocket() {
                     <button
                       onClick={() => {
                         editHandler();
+                        if(confirm("Are you sure to save this pocket")){
                         axios.post(`${path}/editpocket`, {
-                          user_id: 0,
-                          indexPocket: 0,
+                          user_id: localStorage.getItem("user_id"),
+                          indexPocket: pocketIndex,
                           pocket: {
                             cloud_balance: pocket.cloud_balance,
                             cloud_description: description,
@@ -102,11 +115,22 @@ function Pocket() {
                             cloud_name: namePocket,
                             cloud_statement: pocket.cloud_statement,
                           },
-                        });
+                        
+                        })
+                        .then ((res) => {
+                          try {
+                            if (res.data == "Pocket has been edited") {
+                              router("/dashboard");
+                            }
+                          } catch (er) {
+                            console.log(er);
+                          }
+                        })
                       }}
-                      className="border border-blue ml-2 flex justify-center items-center text-center bg-[#A9A9A9] text-white rounded-lg w-24 h-8  "
+                    }
+                      className="border border-blue ml-2 flex justify-center items-center text-center bg-[#334A9C] text-white rounded-lg w-24 h-8 "
                     >
-                      Cancel
+                      Save
                     </button>
                   </div>
                 )}
@@ -124,6 +148,8 @@ function Pocket() {
                   id="name"
                   className="font-jura border border-[#B4B4B4] rounded-[10px] outline-none text-[18px] ml-20 px-2 py-1"
                   placeholder={pocket.cloud_name}
+                  onChange={nameHandler}
+          
                 />
               )}
 
@@ -133,17 +159,15 @@ function Pocket() {
 
               {!isEdit ? (
                 <p id="description" className="font-jura text-[15px] ml-20">
-                  Our team is made up of experienced software developers, and
-                  customer support specialists. We work closely together to
-                  create innovative solutions that simplify the process of
-                  managing your money.
+                  {pocket.cloud_description}
                 </p>
               ) : (
                 <textarea
                   type="text"
                   id="description"
                   className="font-jura text-[15px] w-[20rem] ml-20 border border-[#B4B4B4] rounded-[10px] outline-none px-2 py-1"
-                  placeholder=""
+                  placeholder={pocket.cloud_description}
+                  onChange={descriptionHandler}
                 />
               )}
             </div>
