@@ -14,7 +14,7 @@ export default function TransferFrom() {
   const router = useNavigate();
   useEffect(() => {
     axios
-      .post(`${path}/getUser`, {
+      .post(`${path}/getuser`, {
         user_id: parseInt(localStorage.getItem("user_id")),
       })
       .then((res) => {
@@ -81,6 +81,7 @@ export default function TransferFrom() {
             cash: amount,
             stateRecipient: {
               a2b3c4e6f8z0: {
+                st_from: user.user_id,
                 st_amount: amount,
                 st_date: new Date().toString(),
                 st_status: {
@@ -91,6 +92,7 @@ export default function TransferFrom() {
             },
             stateTransfer: {
               jz8f6e4c3b2a: {
+                st_to: account_number,
                 st_amount: amount,
                 st_date: new Date().toString(),
                 st_status: {

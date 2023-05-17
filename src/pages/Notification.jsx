@@ -13,7 +13,7 @@ function Notification() {
     const [statement, setStatement] = useState([]);
     
     useEffect(()=>{
-        axios.post(`${path}/getUser`, {
+        axios.post(`${path}/getuser`, {
           user_id: parseInt(localStorage.getItem("user_id")),
         }).then((res)=>{
           try {
