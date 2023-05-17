@@ -8,37 +8,38 @@ import investment from "../assets/investment_cloud.svg";
 import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
-import { Chart } from "react-google-charts"; 
+import { Chart } from "react-google-charts";
+import lock from "../assets/lock.svg";
 
 const ExpenseChart = () => {
-
   // Dummy data for monthly expenses
-  const data = [['Month', '2023'],
-    ['Jan', 1000],
-    ['Feb', 800],
-    ['Mar', 1200],
-    ['Apr', 900],
-    ['May', 1500],
-    ['Jun', 1100],
-    ['July', 1300],
-    ['Aug', 1000],
-    ['Sep', 900],
-    ['Oct', 1200],
-    ['Nov', 800],
-    ['Dec', 1100]
+  const data = [
+    ["Month", "2023"],
+    ["Jan", 1000],
+    ["Feb", 800],
+    ["Mar", 1200],
+    ["Apr", 900],
+    ["May", 1500],
+    ["Jun", 1100],
+    ["July", 1300],
+    ["Aug", 1000],
+    ["Sep", 900],
+    ["Oct", 1200],
+    ["Nov", 800],
+    ["Dec", 1100],
   ];
 
   return (
     <Chart
-      width={'100%'}
-      height={'400px'}
+      width={"100%"}
+      height={"400px"}
       chartType="ColumnChart"
       loader={<div>Loading Chart...</div>}
       data={data}
       options={{
-        title: 'Monthly Expenses',
-        chartArea: { width: '80%' },
-        colors: ['#FFD1DC'],
+        title: "Monthly Expenses",
+        chartArea: { width: "80%" },
+        colors: ["#FFD1DC"],
       }}
       legendToggle
     />
@@ -53,21 +54,12 @@ function Dashboard() {
 
   useEffect(() => {
     axios
-      .post(`${path}/getuser`, {
+      .post(`${path}/getUser`, {
         user_id: parseInt(localStorage.getItem("user_id")),
       })
       .then((res) => {
         try {
           setUser(res.data);
-          for (let i = 0; i < res.data.pocket.length; i++) {
-            var pocket = res.data.pocket[i]
-            console.log(pocket)
-            for (let j = 0; j < pocket.cloud_statement.length; j++) {
-              console.log(pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to, i)
-            }
-            
-          }
-          // console.log(res.data.pocket[0].cloud_statement[9][Object.keys(res.data.pocket[0].cloud_statement[9])].st_to)
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {
@@ -81,13 +73,22 @@ function Dashboard() {
         }
       });
   }, []);
-  
 
+  const colors = [
+    "#FFD1DC",
+    "#ADD8E6",
+    "#B19CD9",
+    "#77DD77",
+    "#FFFFE0",
+    "#FFB347",
+    "#CFCFC4",
+    "#FFE5B4",
+    "#E6E6FA",
+    "#98FB98",
+  ];
 
-  const colors = ["#FFD1DC","#ADD8E6","#B19CD9","#77DD77","#FFFFE0","#FFB347","#CFCFC4","#FFE5B4","#E6E6FA","#98FB98"]
-  
-  let data = [["Clound" , "Balance"],];
-  data.push(["Cashbox", cashbox])
+  let data = [["Clound", "Balance"]];
+  data.push(["Cashbox", cashbox]);
 
   user &&
     user.pocket.forEach((element) => {
@@ -125,7 +126,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="w-[85%] flex mt-14">  
+      <div className="w-[85%] flex mt-14">
         {/* Cloud Pocket */}
         <div className="w-[60%] p-8 pb-10 rounded-2xl shadow-king bg-white mr-14">
           <div id="top-cloud-pocket-box" className="flex justify-between">
@@ -163,6 +164,7 @@ function Dashboard() {
                         alt=""
                       />
                     </div>
+
                     <div className="p-4">
                       <div className="text-[#8F8B8B] text-lg">
                         {res.cloud_name}
@@ -177,7 +179,6 @@ function Dashboard() {
           </div>
         </div>
         <div className="w-[40%] space-y-12">
-
           {/* Account balance */}
           <div className="w-full h-[10rem] py-4 px-6 rounded-2xl shadow-king bg-white">
             <p className="text-2xl font-jura font-bold text-[#07636B]">
@@ -190,28 +191,29 @@ function Dashboard() {
               </p>
             )}
           </div>
-          
+
           <div className="flex flex-col w-full h-[20rem] py-4 px-6 rounded-2xl shadow-king bg-white justify-center">
             <div className="flex flex-col w-full pt-3">
-          <p className="text-2xl w-full font-jura font-bold text-[#07636B]">
-              Balance Ratio
-            </p>
-            <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
+              <p className="text-2xl w-full font-jura font-bold text-[#07636B]">
+                Balance Ratio
+              </p>
+              <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
             </div>
 
-                <Chart
-                  chartType="PieChart"
-                
-                  loader={<div>Loading Chart</div>}
-                  options={{ is3D: false , backgroundColor: 'transparent', colors: colors,}}
-                  data={data}
-                  width={'100%'}
-                  height={'100%'}
-                />
+            <Chart
+              chartType="PieChart"
+              loader={<div>Loading Chart</div>}
+              options={{
+                is3D: false,
+                backgroundColor: "transparent",
+                colors: colors,
+              }}
+              data={data}
+              width={"100%"}
+              height={"100%"}
+            />
           </div>
 
-
-          
           {/* Recent */}
           <div className="w-full py-4 px-6 rounded-2xl shadow-king bg-white">
             <p className="text-2xl font-jura font-bold text-[#07636B]">
@@ -273,9 +275,6 @@ function Dashboard() {
           <ExpenseChart />
         </div>
       </div>
-
-
-
     </div>
   );
 }
