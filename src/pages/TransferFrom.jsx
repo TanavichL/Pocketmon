@@ -13,6 +13,9 @@ export default function TransferFrom() {
   const amount = parseInt(localStorage.getItem("amount"));
   const pocketDestination = localStorage.getItem("pocketIndex");
   const router = useNavigate();
+  const location = useLocation();
+  const { pocket } = location.state;
+  // console.log(pocket);
   useEffect(() => {
     axios
       .post(`${path}/getuser`, {
@@ -21,7 +24,7 @@ export default function TransferFrom() {
       .then((res) => {
         try {
           setUser(res.data);
-          console.log(res.data);
+          // console.log(res.data);
         } catch (er) {
           console.log(er);
         }
@@ -34,13 +37,15 @@ export default function TransferFrom() {
     // setIsSelected(isSelected);
     setSelectPocket(res)
     setSelectIndex(index);
-    console.log(selectIndex);
+    // console.log(selectIndex);
   };
+  console.log(selectPocket);
   function RenderImage({ user,selectIndex, handleSelectChange }) {
     return (
       <div className="w-full grid grid-cols-2 gap-4">
         {user &&
           user.pocket.map((res, index) => {
+            if (pocket.cloud_name != res.cloud_name) {
             return (
               <div
                 key={index}
@@ -66,7 +71,7 @@ export default function TransferFrom() {
                   </p>
                 </div>
               </div>
-            );
+            );}
           })}
       </div>
     );
@@ -104,7 +109,7 @@ export default function TransferFrom() {
           })
           .then((res) => {
             try {
-              console.log(res.data);
+              // console.log(res.data);
               localStorage.removeItem("amount");
               localStorage.removeItem("pocketIndex");
               router("/dashboard");
@@ -147,7 +152,7 @@ export default function TransferFrom() {
         })
         .then((res) => {
           try {
-            console.log(res.data);
+            // console.log(res.data);
             localStorage.removeItem("amount");
             localStorage.removeItem("pocketIndex");
             router("/dashboard");
@@ -160,9 +165,17 @@ export default function TransferFrom() {
   function transferForm() {
     if (confirm("Are you sure to transfer from this pocket")) {
       if (selectIndex == 137) {
-        transferFromCashbox();
+        if(amount > selectPocket.balance){
+          alert("You don't have enough money in your pocket")
+        }else{
+          transferFromCashbox();
+        }
       } else {
-        transferFromPocket();
+        if(amount > selectPocket.cloud_balance){
+          alert("You don't have enough money in your pocket.")
+        }else{
+          transferFromPocket();
+        }
       }
     }
   }

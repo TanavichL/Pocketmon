@@ -28,6 +28,7 @@ export default function TransferFrom() {
 
   const [selectIndex, setSelectIndex] = useState(0);
   const handleSelectChange = (res, index) => {
+    console.log(res);
     setSelectPocket(res);
     setSelectIndex(index);
   };
@@ -68,9 +69,8 @@ export default function TransferFrom() {
   }
 
   function transferForm() {
-    console.log(selectPocket.balance);
     if (confirm("Are you sure to transfer from this pocket")) {
-      if (selectPocket.balance < amount) {
+      if (selectPocket.cloud_balance < amount) {
         alert("Insufficient Funds");
       } else {
         axios

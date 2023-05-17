@@ -5,9 +5,14 @@ import header from "../assets/header-bg2.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 export default function TransferPocket() {
   const location = useLocation();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const { pocket } = location.state;
-
+  const min = 1;
+  const handleChange = event => {
+    if(event.target.value.indexOf("-") == -1){
+      setAmount(event.target.value)
+    }
+  };
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
       <NavigationBar />
@@ -36,16 +41,18 @@ export default function TransferPocket() {
                   <div className="">
                     <div className="font-jura text-lg ">Amount</div>
                     <input
-                      type="text"
-                      onChange={(e) => {
-                        setAmount(e.target.value);
-                      }}
+                      type="number"
+                      onChange={
+                        handleChange
+                      }
+                      value={amount}
                       className="w-full mt-2 border rounded border-gray-300 p-2 outline-none"
                     />
                   </div>
                   <div className=" justify-between space-x-10 ">
                     <Link
                       to={"/transferfrom"}
+                      state={{ pocket: pocket }}
                       onClick={() => {
                         localStorage.setItem("amount", amount);
                       }}
