@@ -122,9 +122,9 @@ function AddPocket() {
               </label>
 
               {isChecked ? (
-                <img src={unlock} className="w-7" />
-              ) : (
                 <img src={lock} className="w-5" />
+              ) : (
+                <img src={unlock} className="w-7" />
               )}
 
               <div className="flex flex-col">

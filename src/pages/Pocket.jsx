@@ -1,5 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import "../css/styles.css";
 import NavigationBar from "../components/NavigationBar";
 import header from "../assets/header-bg.svg";
@@ -8,15 +8,22 @@ import outcome from "../assets/outcome.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import path from "../../path";
-import moment from 'moment/moment'
+import moment from "moment/moment";
+import lock from "../assets/lock.svg";
+import unlock from "../assets/unlock.svg";
 
 function Pocket() {
   const [isEdit, setIsEdit] = useState(false);
-  const [namePocket, setNamePocket] = useState('')
-  const [description, setDescription] = useState('')
+  const [namePocket, setNamePocket] = useState("");
+  const [description, setDescription] = useState("");
   const location = useLocation();
   const { pocket } = location.state;
-  const [pocketIndex, setPocketIndex] = useState(parseInt(localStorage.getItem("pocketIndex")))
+  const [pocketIndex, setPocketIndex] = useState(
+    parseInt(localStorage.getItem("pocketIndex"))
+  );
+  const [isChecked, setIsChecked] = useState(pocket.cloud_lock);
+
+
 
   console.log(pocket);
   useEffect(()=>{
@@ -30,13 +37,17 @@ function Pocket() {
   };
 
   const nameHandler = (e) => {
-    setNamePocket(e.target.value)
-    console.log(namePocket)
-  }
+    setNamePocket(e.target.value);
+    console.log(namePocket);
+  };
   const descriptionHandler = (e) => {
-    setDescription(e.target.value)
-    console.log(description)
-  }
+    setDescription(e.target.value);
+    console.log(description);
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   const router = useNavigate();
 
@@ -58,13 +69,26 @@ function Pocket() {
                 </p>
                 {!isEdit ? (
                   <div className="flex ">
-                    <Link
+
+                    {isChecked ? (
+                       <button
+
+                       className="border border-blue ml-20 flex justify-center items-center bg-[gray] text-white  text-center rounded-lg w-24 h-8"
+                     >
+                       Tranfer
+                     </button>
+ 
+                    ) : (
+                      <Link
                       to={"/transferpocket"}
                       state={{ pocket: pocket }}
                       className="border border-blue ml-20 flex justify-center items-center bg-[#334A9C] text-white  text-center rounded-lg w-24 h-8"
                     >
                       Tranfer
                     </Link>
+                    )}
+
+
                     <button
                       onClick={editHandler}
                       className="border border-blue ml-2 flex justify-center items-center text-center bg-[#07636B] text-white rounded-lg w-24 h-8  "
@@ -104,31 +128,31 @@ function Pocket() {
                     <button
                       onClick={() => {
                         editHandler();
-                        if(confirm("Are you sure to save this pocket")){
-                        axios.post(`${path}/editpocket`, {
-                          user_id: localStorage.getItem("user_id"),
-                          indexPocket: pocketIndex,
-                          pocket: {
-                            cloud_balance: pocket.cloud_balance,
-                            cloud_description: description,
-                            cloud_img: pocket.cloud_img,
-                            cloud_lock: pocket.cloud_lock,
-                            cloud_name: namePocket,
-                            cloud_statement: pocket.cloud_statement,
-                          },
-                        
-                        })
-                        .then ((res) => {
-                          try {
-                            if (res.data == "Pocket has been edited") {
-                              router("/dashboard");
-                            }
-                          } catch (er) {
-                            console.log(er);
-                          }
-                        })
+                        if (confirm("Are you sure to save this pocket")) {
+                          axios
+                            .post(`${path}/editpocket`, {
+                              user_id: localStorage.getItem("user_id"),
+                              indexPocket: pocketIndex,
+                              pocket: {
+                                cloud_balance: pocket.cloud_balance,
+                                cloud_description: description,
+                                cloud_img: pocket.cloud_img,
+                                cloud_lock: isChecked,
+                                cloud_name: namePocket,
+                                cloud_statement: pocket.cloud_statement,
+                              },
+                            })
+                            .then((res) => {
+                              try {
+                                if (res.data == "Pocket has been edited") {
+                                  router("/dashboard");
+                                }
+                              } catch (er) {
+                                console.log(er);
+                              }
+                            });
+                        }
                       }}
-                    }
                       className="border border-blue ml-2 flex justify-center items-center text-center bg-[#334A9C] text-white rounded-lg w-24 h-8 "
                     >
                       Save
@@ -150,7 +174,6 @@ function Pocket() {
                   className="font-jura border border-[#B4B4B4] rounded-[10px] outline-none text-[18px] ml-20 px-2 py-1"
                   placeholder={pocket.cloud_name}
                   onChange={nameHandler}
-          
                 />
               )}
 
@@ -170,6 +193,34 @@ function Pocket() {
                   placeholder={pocket.cloud_description}
                   onChange={descriptionHandler}
                 />
+              )}
+
+              {!isEdit ? (
+                <div className="flex flex-row ml-20"></div>
+              ) : (
+                <div className="flex items-centers space-y-5 space-x-2">
+                  <label className="relative inline-flex items-center cursor-pointer mt-5 ml-20">
+                    <input
+                      type="checkbox"
+                      value=""
+                      className="sr-only peer"
+                      onChange={handleCheckboxChange}
+                    ></input>
+                    <div className="w-11 h-6  bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-[#07636B] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[5px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  </label>
+
+                  {isChecked ? (
+                    <img src={lock} className="w-5" />
+                  ) : (
+                    <img src={unlock} className="w-7" />
+                  )}
+
+                  <div className="flex flex-col">
+                    <p className="font-jura text-[20px] font-bold">
+                      Lock Cloud Pocket
+                    </p>
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -199,7 +250,7 @@ function Pocket() {
                           Money Moved Successfully
                         </div>
                         <div className="font-lexend text-[15px] text-gray-500 ml-10">
-                          Date : {moment(res_statement.st_date).format('LLLL')}
+                          Date : {moment(res_statement.st_date).format("LLLL")}
                         </div>
                       </div>
 
@@ -226,7 +277,7 @@ function Pocket() {
                           Money Moved Successfully
                         </div>
                         <div className="font-lexend text-[15px] text-gray-500 ml-10">
-                          Date : {moment(res_statement.st_date).format('LLLL')}
+                          Date : {moment(res_statement.st_date).format("LLLL")}
                         </div>
                       </div>
 
