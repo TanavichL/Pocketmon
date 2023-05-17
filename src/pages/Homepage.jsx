@@ -17,7 +17,7 @@ function Homepage() {
     tl.to(test, { x: 30, y: -70, duration: 6 });
   });
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#E6F2FD]">
+    <div id="homepage" className="min-h-screen overflow-x-hidden bg-[#E6F2FD]">
       <NavigationBar />
       <div className="w-full min-h-screen">
         <div className="w-full flex justify-center items-center relative">
