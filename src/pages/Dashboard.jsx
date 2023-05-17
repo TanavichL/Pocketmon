@@ -26,32 +26,61 @@ function Dashboard() {
       .then((res) => {
         try {
           setUser(res.data);
-          console.log(res.data.pocket)
-           for (let i = 0; i < res.data.pocket.length; i++) {
-            var pocket = res.data.pocket[i]
+          console.log(res.data.pocket);
+          let array = [];
+
+          for (let i = 0; i < res.data.pocket.length; i++) {
+            var pocket = res.data.pocket[i];
+
             for (let j = 0; j < pocket.cloud_statement.length; j++) {
-              if (pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to){
-                axios.post(`${path}/getaccountnumber`,{
-                  account_number : pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to
-                }).then((res) =>{
-                  if(collectRecent.filter(e => e.account_number == res.data.account_number).length == 0){
-                    setRecent([...recent, {name: res.data.firstname+' '+res.data.lastname, account_number: res.data.account_number}])
-                  }
-                  // setRecent(collectRecent)
-                  
-                })
+              if (
+                pocket.cloud_statement[j][
+                  Object.keys(pocket.cloud_statement[j])
+                ].st_to
+              ) {
+                const promise = axios.post(`${path}/getaccountnumber`, {
+                  account_number:
+                    pocket.cloud_statement[j][
+                      Object.keys(pocket.cloud_statement[j])
+                    ].st_to,
+                });
+
+                array.push(promise);
               }
             }
-            
           }
+          Promise.all(array)
+            .then((response) => {
+              let newArray = [...recent];
+
+              response.forEach((res) => {
+                const existingAccount = newArray.find(
+                  (e) => e.account_number === res.data.account_number
+                );
+
+                if (!existingAccount) {
+                  newArray.push({
+                    name: res.data.firstname + " " + res.data.lastname,
+                    account_number: res.data.account_number,
+                  });
+                }
+              }); 
+              setRecent(newArray);
+              localStorage.setItem("recent", JSON.stringify(newArray  ))
+              console.log(newArray);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {
             cash += element.cloud_balance;
           });
           setBalance(cash);
-        } catch (er) {
-          console.log(er);
+        } catch (error) {
+          console.log(error);
         }
       });
   }, []);
