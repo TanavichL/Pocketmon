@@ -15,6 +15,8 @@ function Dashboard() {
   const [balances, setBalance] = useState(0);
   const [cashbox, setCashbox] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [recent, setRecent] = useState([])
+  var collectRecent = []
 
   useEffect(() => {
     axios
@@ -24,21 +26,28 @@ function Dashboard() {
       .then((res) => {
         try {
           setUser(res.data);
-          for (let i = 0; i < res.data.pocket.length; i++) {
+          console.log(res.data.pocket)
+           for (let i = 0; i < res.data.pocket.length; i++) {
             var pocket = res.data.pocket[i]
-            console.log(pocket)
             for (let j = 0; j < pocket.cloud_statement.length; j++) {
-              console.log(pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to, i)
+              if (pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to){
+                axios.post(`${path}/getaccountnumber`,{
+                  account_number : pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to
+                }).then((res) =>{
+                  if(collectRecent.filter(e => e.account_number == res.data.account_number).length == 0){
+                    setRecent([...recent, {name: res.data.firstname+' '+res.data.lastname, account_number: res.data.account_number}])
+                  }
+                  // setRecent(collectRecent)
+                  
+                })
+              }
             }
             
           }
-          // console.log(res.data.pocket[0].cloud_statement[9][Object.keys(res.data.pocket[0].cloud_statement[9])].st_to)
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {
-            // console.log(element.cloud_balance);
             cash += element.cloud_balance;
-            // console.log(balances);
           });
           setBalance(cash);
         } catch (er) {
@@ -185,51 +194,25 @@ function Dashboard() {
             </p>
             <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
             <div className="mt-4 flex space-x-6">
-              <div className="flex flex-col items-center space-y-1">
+              {
+              recent && recent.map((res, index) =>{
+                return (<div key={index} className="select-none flex flex-col items-center space-y-1">
                 <img src={IconProfile} alt="" />
                 <p
                   id="name-profile-recent"
                   className="text-[#07636B] font-jura font-bold"
                 >
-                  Phufa
+                  {res.name}
                 </p>
                 <p
                   id="account-number-recent"
                   className="text-[#07636B] font-jura font-bold"
                 >
-                  x-xxx-1234
+                  {'x-xxx-'+res.account_number.slice(-4)}
                 </p>
-              </div>
-              <div className="flex flex-col items-center space-y-1">
-                <img src={IconProfile} alt="" />
-                <p
-                  id="name-profile-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  Mind
-                </p>
-                <p
-                  id="account-number-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  x-xxx-1234
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-1">
-                <img src={IconProfile} alt="" />
-                <p
-                  id="name-profile-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  Owen
-                </p>
-                <p
-                  id="account-number-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  x-xxx-1234
-                </p>
-              </div>
+              </div>);
+              })
+              }
             </div>
           </div>
         </div>
