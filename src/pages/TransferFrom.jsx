@@ -13,6 +13,9 @@ export default function TransferFrom() {
   const amount = parseInt(localStorage.getItem("amount"));
   const pocketDestination = localStorage.getItem("pocketIndex");
   const router = useNavigate();
+  const location = useLocation();
+  const { pocket } = location.state;
+  console.log(pocket);
   useEffect(() => {
     axios
       .post(`${path}/getUser`, {
@@ -41,6 +44,7 @@ export default function TransferFrom() {
       <div className="w-full grid grid-cols-2 gap-4">
         {user &&
           user.pocket.map((res, index) => {
+            if (pocket.cloud_name != res.cloud_name) {
             return (
               <div
                 key={index}
@@ -66,7 +70,7 @@ export default function TransferFrom() {
                   </p>
                 </div>
               </div>
-            );
+            );}
           })}
       </div>
     );
