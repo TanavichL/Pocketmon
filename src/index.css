@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 *{
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
 }
 @font-face {
     font-family: Jura;

@@ -26,8 +26,9 @@ function Pocket() {
 
 
   console.log(pocket);
-  // console.log(pocket.cloud_statement[1])
-  // console.log(pocket.cloud_statement[0][Object.keys(pocket.cloud_statement[0])])
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  })
   if (pocket == null) {
     window.location.replace("/dashboard");
   }

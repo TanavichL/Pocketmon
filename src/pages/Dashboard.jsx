@@ -50,6 +50,8 @@ function Dashboard() {
   const [balances, setBalance] = useState(0);
   const [cashbox, setCashbox] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [recent, setRecent] = useState([])
+  var collectRecent = []
 
   useEffect(() => {
     axios
@@ -59,25 +61,60 @@ function Dashboard() {
       .then((res) => {
         try {
           setUser(res.data);
+          let array = [];
+
           for (let i = 0; i < res.data.pocket.length; i++) {
-            var pocket = res.data.pocket[i]
-            console.log(pocket)
+            var pocket = res.data.pocket[i];
+
             for (let j = 0; j < pocket.cloud_statement.length; j++) {
-              console.log(pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to, i)
+              if (
+                pocket.cloud_statement[j][
+                  Object.keys(pocket.cloud_statement[j])
+                ].st_to
+              ) {
+                const promise = axios.post(`${path}/getaccountnumber`, {
+                  account_number:
+                    pocket.cloud_statement[j][
+                      Object.keys(pocket.cloud_statement[j])
+                    ].st_to,
+                });
+
+                array.push(promise);
+              }
             }
-            
           }
-          // console.log(res.data.pocket[0].cloud_statement[9][Object.keys(res.data.pocket[0].cloud_statement[9])].st_to)
+          Promise.all(array)
+            .then((response) => {
+              let newArray = [...recent];
+
+              response.forEach((res) => {
+                const existingAccount = newArray.find(
+                  (e) => e.account_number === res.data.account_number
+                );
+
+                if (!existingAccount) {
+                  newArray.push({
+                    name: res.data.firstname + " " + res.data.lastname,
+                    account_number: res.data.account_number,
+                  });
+                }
+              }); 
+              setRecent(newArray);
+              localStorage.setItem("recent", JSON.stringify(newArray  ))
+              console.log(newArray);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {
-            // console.log(element.cloud_balance);
             cash += element.cloud_balance;
-            // console.log(balances);
           });
           setBalance(cash);
-        } catch (er) {
-          console.log(er);
+        } catch (error) {
+          console.log(error);
         }
       });
   }, []);
@@ -219,51 +256,25 @@ function Dashboard() {
             </p>
             <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
             <div className="mt-4 flex space-x-6">
-              <div className="flex flex-col items-center space-y-1">
+              {
+              recent && recent.map((res, index) =>{
+                return (<div key={index} className="select-none flex flex-col items-center space-y-1">
                 <img src={IconProfile} alt="" />
                 <p
                   id="name-profile-recent"
                   className="text-[#07636B] font-jura font-bold"
                 >
-                  Phufa
+                  {res.name}
                 </p>
                 <p
                   id="account-number-recent"
                   className="text-[#07636B] font-jura font-bold"
                 >
-                  x-xxx-1234
+                  {'x-xxx-'+res.account_number.slice(-4)}
                 </p>
-              </div>
-              <div className="flex flex-col items-center space-y-1">
-                <img src={IconProfile} alt="" />
-                <p
-                  id="name-profile-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  Mind
-                </p>
-                <p
-                  id="account-number-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  x-xxx-1234
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-1">
-                <img src={IconProfile} alt="" />
-                <p
-                  id="name-profile-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  Owen
-                </p>
-                <p
-                  id="account-number-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  x-xxx-1234
-                </p>
-              </div>
+              </div>);
+              })
+              }
             </div>
           </div>
         </div>
