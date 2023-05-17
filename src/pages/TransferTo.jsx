@@ -9,14 +9,9 @@ import path from "../../path";
 export default function TransferTo() {
   const [user, setUser] = useState(null);
   const [accountNumber, setAccountNumber] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [recent, setRecent] = useState()
   const router = useNavigate();
-  const handleChange = event => {
-    if(event.target.value.indexOf("-") == -1){
-      setAmount(event.target.value)
-    }
-  };
   useEffect(() => {
     setRecent(JSON.parse(localStorage.getItem("recent")))
     axios
@@ -26,7 +21,7 @@ export default function TransferTo() {
       .then((res) => {
         try {
           setUser(res.data);
-        } catch (er) {
+        } catch (er) {  
           console.log(er);
         }
       });
@@ -47,7 +42,7 @@ export default function TransferTo() {
               </div>
               <div className="flex space-x-4">
                 {recent && recent.map((res, index) =>{
-                  return (<div key={index} onClick={()=> { document.querySelector("input[name='accountnumber']").value = res.account_number}} className="w-60 flex justify-center border rounded-lg p-3 select-none hover:border-[#07636b8a] cursor-pointer border-gray-300 space-x-6">
+                  return (<div key={index} onClick={()=> { setAccountNumber(res.account_number)}} className={"w-60 flex justify-center border rounded-lg p-3 select-none hover:border-[#07636b8a] cursor-pointer space-x-6 " + (accountNumber == res.account_number ? 'border-[#07636b8a]' : 'border-gray-300')}>
                   <img src={icon_profile} alt="" />
                   <div className="font-jura text-[#07636B] font-bold flex flex-col justify-center">
                     <p>{res.name}</p>
@@ -62,9 +57,12 @@ export default function TransferTo() {
                 <input
                   type="text"
                   name="accountnumber"
+                  value={accountNumber}
                   className="w-full border rounded border-gray-300 p-2 outline-none"
                   onChange={(e) => {
-                    setAccountNumber(e.target.value);
+                    if(/^[0-9]+$/.test(e.target.value)){
+                      setAccountNumber(e.target.value);
+                    }
                   }}
                 />
               </div>
@@ -72,12 +70,14 @@ export default function TransferTo() {
                 <p className="text-lg ">Amount</p>
                 <div className="relative">
                   <input
-                    type="number"
+                    type="text"
                     className="w-full border rounded border-gray-300 p-2 outline-none"
-                    onChange={
-                      handleChange
-                    }
                     value={amount}
+                    onChange={(e) => {
+                    if(/^[0-9]+$/.test(e.target.value)){
+                      setAmount(parseInt(e.target.value));
+                    }
+                    }}
                   />
                   <p className="absolute right-4 top-1.5 text-xl text-gray-400">
                     THB
@@ -86,15 +86,11 @@ export default function TransferTo() {
               </div>
               <button
                 onClick={() => {
-                  console.log(amount);
                   if (accountNumber.length != 8){
                     alert('Please Enter Account Number')
                   }
-                  else if (parseInt(amount) <= 0 || amount == '') {
+                  else if (parseInt(amount) <= 0) {
                     alert('Please Enter Amount')
-                  }
-                  else if(user.account_number == accountNumber){
-                    alert("Don't enter your own account number.")
                   }
                   else{
                     localStorage.setItem("amount", amount);

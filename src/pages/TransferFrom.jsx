@@ -15,7 +15,6 @@ export default function TransferFrom() {
   const router = useNavigate();
   const location = useLocation();
   const { pocket } = location.state;
-  // console.log(pocket);
   useEffect(() => {
     axios
       .post(`${path}/getuser`, {

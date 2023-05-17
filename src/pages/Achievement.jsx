@@ -54,7 +54,7 @@ function Achievement() {
                             <div className='flex items-center justify-center w-full pr-2'>
                                 <p className='text-[1.0416666666666667vw] font-[500]'>{water}</p>
                             </div>
-                            <img src={plusAchieve} alt="" />
+                            <img src={plusAchieve} className='pr-2' alt="" />
                         </div>
                     </div>
                     <div id='tree-bg' className='2xl:px-20 lg:px-8 py-5 flex flex-col items-center space-y-4'>

@@ -4,6 +4,7 @@ import "../css/styles.css";
 import header from "../assets/header-bg2.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import cash from "../assets/transfer-pocket-img/Cashbox.svg";
 import path from "../../path";
 
 export default function TransferFrom() {
@@ -67,13 +68,52 @@ export default function TransferFrom() {
       </div>
     );
   }
-
-  function transferForm() {
-    if (confirm("Are you sure to transfer from this pocket")) {
-      if (selectPocket.cloud_balance < amount) {
-        alert("Insufficient Funds");
-      } else {
-        axios
+  function transferFromCashBox(){
+    axios.post(`${path}/getaccountnumber`, {
+      account_number,
+    }).then((res)=>{
+      axios
+      .post(`${path}/transfercashtocash`, {
+        transfer_id: user.user_id,
+        recipient_id: res.data.user_id,
+        cash: amount,
+        stateRecipient: {
+          a2b3c4e6f8z0: {
+            st_from: user.user_id,
+            st_amount: amount,
+            st_date: new Date().toString(),
+            st_status: {
+              cashflow: "income",
+              type: "account",
+            },
+          },
+        },
+        stateTransfer: {
+          jz8f6e4c3b2a: {
+            st_to: account_number,
+            st_amount: amount,
+            st_date: new Date().toString(),
+            st_status: {
+              cashflow: "outcome",
+              type: "account",
+            },
+          },
+        },
+      })
+      .then((res) => {
+        try {
+          console.log(res.data)
+          localStorage.removeItem("amount");
+          localStorage.removeItem("pocketIndex");
+          router("/dashboard");
+        } catch (er) {
+          console.log(er);
+        }
+      });
+    });
+  }
+  function transferFromPocket(){
+    axios
           .post(`${path}/transferpocket`, {
             user_id: user.user_id,
             pocket_index: selectIndex,
@@ -112,6 +152,22 @@ export default function TransferFrom() {
               console.log(er);
             }
           });
+  }
+  function transferForm() {
+    if (confirm("Are you sure to transfer from this pocket")) {
+      if (selectIndex == 137) {
+        if(amount > selectPocket.balance){
+          alert("You don't have enough money in your pocket")
+        }else{
+          console.log(22)
+          transferFromCashBox();
+        }
+      } else {
+        if(amount > selectPocket.cloud_balance){
+          alert("You don't have enough money in your pocket.")
+        }else{
+          transferFromPocket();
+        }
       }
     }
   }
@@ -137,7 +193,36 @@ export default function TransferFrom() {
               <div className="mt-5">
                 <p className="text-2xl font-jura">From</p>
               </div>
-
+              <div className="flex space-x-4">
+                {user &&(
+                <div
+                  onClick={() => {
+                    setSelectIndex(137);
+                    setSelectPocket(user.cashbox)
+                  }}
+                  className={`w-1/2 flex flex-col p-5 shadow-king space-y-3 rounded-[15px] drop-shadow-xl ${
+                    selectIndex == 137
+                      ? "border-[1px] rounded-2xl border-[#07636B]"
+                      : ""
+                  }`}
+                >
+                  <div className="flex space-x-6">
+                    <img src={cash} width={75} alt="" />
+                    <div className="font-jura font-bold flex flex-col ">
+                      <p className="text-gray-400 text-xl">Cashbox</p>
+                      <p className="text-[#2b5558] text-lg">฿ {user.cashbox.balance}</p>
+                    </div>
+                  </div>
+                  {user && (
+                    <div className="font-jura">
+                      Account Number: x-xxx-{user.account_number.slice(-4)}
+                    </div>
+                  )}
+                </div>)}
+              </div>
+              <div className="mt-5">
+                <p className="text-2xl font-jura">Or</p>
+              </div>
               <RenderImage
                 user={user}
                 selectIndex={selectIndex}

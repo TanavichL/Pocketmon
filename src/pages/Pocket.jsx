@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../css/styles.css";
 import NavigationBar from "../components/NavigationBar";
 import header from "../assets/header-bg.svg";
@@ -19,8 +19,9 @@ function Pocket() {
   const [pocketIndex, setPocketIndex] = useState(parseInt(localStorage.getItem("pocketIndex")))
 
   console.log(pocket);
-  // console.log(pocket.cloud_statement[1])
-  // console.log(pocket.cloud_statement[0][Object.keys(pocket.cloud_statement[0])])
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  })
   if (pocket == null) {
     window.location.replace("/dashboard");
   }

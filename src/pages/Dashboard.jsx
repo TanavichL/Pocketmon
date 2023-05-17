@@ -61,7 +61,6 @@ function Dashboard() {
       .then((res) => {
         try {
           setUser(res.data);
-          console.log(res.data.pocket);
           let array = [];
 
           for (let i = 0; i < res.data.pocket.length; i++) {
