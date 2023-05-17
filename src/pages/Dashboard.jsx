@@ -60,7 +60,7 @@ function Dashboard() {
   }
   useEffect(() => {
     axios
-      .post(`${path}/getUser`, {
+      .post(`${path}/getuser`, {
         user_id: parseInt(localStorage.getItem("user_id")),
       })
       .then((res) => {
