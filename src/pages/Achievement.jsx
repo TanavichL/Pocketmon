@@ -15,7 +15,7 @@ function Achievement() {
     const [water, setWater] = useState(0);
     const [cashbox, setCashbox] = useState(0);
     useEffect(()=>{
-        axios.post(`${path}/getUser`, {
+        axios.post(`${path}/getuser`, {
           user_id: parseInt(localStorage.getItem("user_id")),
         }).then((res)=>{
           try {

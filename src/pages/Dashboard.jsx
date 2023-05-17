@@ -9,7 +9,6 @@ import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
 import { Chart } from "react-google-charts";
-import randomColor from "randomcolor";
 
 function Dashboard() {
   const [user, setUser] = useState(null);
@@ -19,12 +18,21 @@ function Dashboard() {
 
   useEffect(() => {
     axios
-      .post(`${path}/getUser`, {
+      .post(`${path}/getuser`, {
         user_id: parseInt(localStorage.getItem("user_id")),
       })
       .then((res) => {
         try {
           setUser(res.data);
+          for (let i = 0; i < res.data.pocket.length; i++) {
+            var pocket = res.data.pocket[i]
+            console.log(pocket)
+            for (let j = 0; j < pocket.cloud_statement.length; j++) {
+              console.log(pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to, i)
+            }
+            
+          }
+          // console.log(res.data.pocket[0].cloud_statement[9][Object.keys(res.data.pocket[0].cloud_statement[9])].st_to)
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {

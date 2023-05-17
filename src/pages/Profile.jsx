@@ -16,7 +16,7 @@ function Profile() {
     const [tel, setTel] = useState("");
     const [email, setEmail] = useState("");
     useEffect(()=>{
-        axios.post(`${path}/getUser`, {
+        axios.post(`${path}/getuser`, {
           user_id: parseInt(localStorage.getItem("user_id")),
         }).then((res)=>{
           try {
