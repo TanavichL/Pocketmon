@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import NavigationBar from '../components/NavigationBar'
+import $ from 'jquery';
+import Loading from "../components/Loading"
 import "../css/styles.css"
 import airplane from "../assets/airplane.svg"
 import axios from "axios"
@@ -11,6 +13,10 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useNavigate();
+  function renderloading(){
+    $("#modal").fadeOut()
+  }
+  setTimeout(renderloading, 500)
   function login(){
     axios.post(`${path}/login`, {
       email: email,
@@ -27,6 +33,9 @@ function SignIn() {
     }
   return (
     <div id='bg-login' className="h-screen bg-[#DFF2E8]">
+      <div id="modal" className="w-full h-full absolute z-[100]">
+      <Loading />
+      </div>
       <NavigationBar />
       <div className='flex justify-center items-center h-full'>
         <div className='relative w-[33%] bg-white rounded-[15px] 2xl:px-20 lg:px-10 2xl:py-16 lg:py-10 shadow-king'>

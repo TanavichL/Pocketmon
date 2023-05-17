@@ -3,6 +3,8 @@ import NavigationBar from "../components/NavigationBar";
 import "../css/styles.css";
 import header from "../assets/header-bg2.svg";
 import icon_profile from "../assets/profile-icon.svg";
+import $ from 'jquery';
+import Loading from "../components/Loading"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import path from "../../path";
@@ -11,6 +13,9 @@ export default function TransferTo() {
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState("");
   const [recent, setRecent] = useState()
+  function renderloading(){
+    $("#modal").fadeOut()
+  }
   const router = useNavigate();
   useEffect(() => {
     setRecent(JSON.parse(localStorage.getItem("recent")))
@@ -21,6 +26,7 @@ export default function TransferTo() {
       .then((res) => {
         try {
           setUser(res.data);
+          renderloading()
         } catch (er) {  
           console.log(er);
         }
@@ -28,6 +34,9 @@ export default function TransferTo() {
   }, []);
   return (
     <div className="min-h-screen  bg-[#F9F8F8]">
+      <div id="modal" className="w-full h-full absolute z-[100]">
+      <Loading />
+      </div>
       <NavigationBar />
       <img src={header} className="w-full absolute" alt="" />
       <div className="relative flex justify-center items-center h-full flex-col">

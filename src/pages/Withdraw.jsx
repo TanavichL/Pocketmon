@@ -4,6 +4,8 @@ import "../css/styles.css";
 import NavigationBar from "../components/NavigationBar";
 import header from "../assets/header-bg2.svg";
 import qr from "../assets/qr-code.png";
+import $ from 'jquery';
+import Loading from "../components/Loading"
 import QRCode from 'qrcode.react';
 import generatePayload  from 'promptpay-qr';
 import axios from "axios";

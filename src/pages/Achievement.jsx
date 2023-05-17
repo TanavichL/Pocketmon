@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import NavigationBar from '../components/NavigationBar'
 import "../css/styles.css"
 import bgAchievement from "../assets/bg-achievement.svg"
+import $ from 'jquery';
+import Loading from "../components/Loading"
 import axios from 'axios'
 import path from '../../path'
 import plusAchieve from "../assets/icon8/btnPlusAchieve.svg"
@@ -14,6 +16,9 @@ function Achievement() {
     const [balances, setBalance] = useState(0);
     const [water, setWater] = useState(0);
     const [cashbox, setCashbox] = useState(0);
+    function renderloading(){
+        $("#modal").fadeOut(500)
+      }
     useEffect(()=>{
         axios.post(`${path}/getuser`, {
           user_id: parseInt(localStorage.getItem("user_id")),
@@ -31,6 +36,7 @@ function Achievement() {
                 num = ((cash + res.data.cashbox.balance) - (cash + res.data.cashbox.balance) % 1000) / 1000
                 setWater(num)
                 setUser(res.data)
+                renderloading()
             } catch (er) {
                 console.log(er)
             }
@@ -43,6 +49,9 @@ function Achievement() {
   return (
     <div className="h-screen bg-[#F9F8F8]">
         <div className='h-full w-full flex justify-center'>
+        <div id="modal" className="w-full h-full absolute z-[100]">
+      <Loading />
+      </div>
             <img src={bgAchievement} className="w-full absolute" alt="" />
             <NavigationBar />
             <div className='w-full h-full flex justify-center items-center'>

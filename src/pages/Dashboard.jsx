@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useEffect, Component } from "react";
+import $ from 'jquery';
+import Loading from "../components/Loading"
 import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import logoCashBox from "../assets/logo-cashbox.svg";
@@ -11,7 +13,6 @@ import path from "../../path";
 import { Chart } from "react-google-charts"; 
 
 const ExpenseChart = () => {
-
   // Dummy data for monthly expenses
   const data = [['Month', '2023'],
     ['Jan', 1000],
@@ -52,7 +53,9 @@ function Dashboard() {
   const [visible, setVisible] = useState(true);
   const [recent, setRecent] = useState([])
   var collectRecent = []
-
+  function renderloading(){
+    $("#modal").fadeOut()
+  }
   useEffect(() => {
     axios
       .post(`${path}/getuser`, {
@@ -100,6 +103,7 @@ function Dashboard() {
                 }
               }); 
               setRecent(newArray);
+              renderloading()
               localStorage.setItem("recent", JSON.stringify(newArray  ))
               console.log(newArray);
             })
@@ -137,8 +141,12 @@ function Dashboard() {
   }
   return (
     <div className="w-full min-h-screen flex pb-10 flex-col items-center bg-[#F9F8F8]">
+      <div id="modal" className="w-full h-full absolute z-[100]">
+      <Loading />
+      </div>
       <NavigationBar />
       <div className="relative flex justify-center items-end w-full h-full bg-[#F9F8F8]">
+        
         <img src={header} className="w-full" alt="" />
         <div className="w-[85%] flex flex-col absolute z-2">
           {user && (

@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "../css/styles.css";
+import $ from 'jquery';
+import Loading from "../components/Loading"
 import NavigationBar from "../components/NavigationBar";
 import header from "../assets/header-bg.svg";
 import income from "../assets/income.svg";
@@ -21,14 +23,16 @@ function Pocket() {
   const [pocketIndex, setPocketIndex] = useState(
     parseInt(localStorage.getItem("pocketIndex"))
   );
+  function renderloading(){
+    $("#modal").fadeOut()
+  }
   const [isChecked, setIsChecked] = useState(pocket.cloud_lock);
 
-
-
   console.log(pocket);
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  })
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setTimeout(renderloading, 1000)
+  });
   if (pocket == null) {
     window.location.replace("/dashboard");
   }
@@ -53,6 +57,9 @@ function Pocket() {
 
   return (
     <div className="min-h-screen bg-[#F9F8F8]">
+      <div id="modal" className="w-full h-full absolute z-[100]">
+      <Loading />
+      </div>
       <NavigationBar />
       <img src={header} className="w-full absolute" alt="" />
       <div className="relative flex justify-center items-center h-full flex-col">
@@ -69,25 +76,19 @@ function Pocket() {
                 </p>
                 {!isEdit ? (
                   <div className="flex ">
-
                     {isChecked ? (
-                       <button
-
-                       className="border border-blue ml-20 flex justify-center items-center bg-[gray] text-white  text-center rounded-lg w-24 h-8"
-                     >
-                       Tranfer
-                     </button>
- 
+                      <button className="border border-blue ml-20 flex justify-center items-center bg-gray-500 cursor-not-allowed text-white  text-center rounded-lg w-24 h-8">
+                        Tranfer
+                      </button>
                     ) : (
                       <Link
-                      to={"/transferpocket"}
-                      state={{ pocket: pocket }}
-                      className="border border-blue ml-20 flex justify-center items-center bg-[#334A9C] text-white  text-center rounded-lg w-24 h-8"
-                    >
-                      Tranfer
-                    </Link>
+                        to={"/transferpocket"}
+                        state={{ pocket: pocket }}
+                        className="border border-blue ml-20 flex justify-center items-center bg-[#334A9C] text-white  text-center rounded-lg w-24 h-8"
+                      >
+                        Tranfer
+                      </Link>
                     )}
-
 
                     <button
                       onClick={editHandler}
@@ -204,23 +205,26 @@ function Pocket() {
                       type="checkbox"
                       value=""
                       className="sr-only peer"
+                      checked
                       onChange={handleCheckboxChange}
                     ></input>
                     <div className="w-11 h-6  bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-[#07636B] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[5px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                   </label>
 
                   {isChecked ? (
-                    <img src={lock} className="w-5" />
+                    <img src={lock} className="w-4" />
                   ) : (
-                    <img src={unlock} className="w-7" />
+                    <img src={unlock} className="w-5" />
                   )}
 
                   <div className="flex flex-col">
-                    <p className="font-jura text-[20px] font-bold">
+                    <p className="font-jura text-[20px] font-semibold">
                       Lock Cloud Pocket
                     </p>
+                    
                   </div>
                 </div>
+                
               )}
             </div>
           </div>

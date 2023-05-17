@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
-import { gsap, TweenMax } from "gsap";
+import $ from 'jquery';
+import { gsap } from "gsap";
 import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
+import Loading from "../components/Loading"
 import background from "../assets/background-homepage.svg";
 import balloon from "../assets/balloon.svg";
 import grass from "../assets/background-grass.svg";
@@ -10,15 +12,22 @@ import icon_ig from "../assets/icon8/icons8-instagram-100 (1).svg";
 import icon_tw from "../assets/icon8/icons8-twitter-100.svg";
 import icon_yt from "../assets/icon8/icons8-youtube-100.svg";
 import icon_pocket from "../assets/icon8/image 69.svg";
+function renderloading(){
+  $("#modal").fadeOut(1000)
+}
 function Homepage() {
   let test = useRef(null);
   useEffect(() => {
     var tl = gsap.timeline({ yoyo: true, repeat: -1 });
     tl.to(test, { x: 30, y: -70, duration: 6 });
+    renderloading()
   });
   return (
     <div id="homepage" className="min-h-screen overflow-x-hidden bg-[#E6F2FD]">
       <NavigationBar />
+      <div id="modal" className="absolute z-[100]">
+      <Loading />
+      </div>
       <div className="w-full min-h-screen">
         <div className="w-full flex justify-center items-center relative">
           <img

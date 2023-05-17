@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import NavigationBar from "../components/NavigationBar";
 import "../css/styles.css";
+import $ from 'jquery';
+import Loading from "../components/Loading"
 import header from "../assets/header-bg2.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,6 +15,9 @@ export default function TransferFrom() {
   const account_number = localStorage.getItem("account_number");
   const [selectPocket, setSelectPocket] = useState(null);
   const router = useNavigate();
+  function renderloading(){
+    $("#modal").fadeOut()
+  }
   useEffect(() => {
     axios
       .post(`${path}/getuser`, {
@@ -21,6 +26,7 @@ export default function TransferFrom() {
       .then((res) => {
         try {
           setUser(res.data);
+          renderloading()
         } catch (er) {
           console.log(er);
         }
@@ -173,6 +179,9 @@ export default function TransferFrom() {
   }
   return (
     <div className="min-h-screen  bg-[#F9F8F8]">
+      <div id="modal" className="w-full h-full absolute z-[100]">
+      <Loading />
+      </div>
       <NavigationBar />
       <img src={header} className="w-full absolute" alt="" />
       <div className="relative flex justify-center items-center h-full flex-col">
