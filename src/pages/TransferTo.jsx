@@ -11,6 +11,11 @@ export default function TransferTo() {
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState(0);
   const router = useNavigate();
+  const handleChange = event => {
+    if(event.target.value.indexOf("-") == -1){
+      setAmount(event.target.value)
+    }
+  };
   useEffect(() => {
     axios
       .post(`${path}/getuser`, {
@@ -62,11 +67,12 @@ export default function TransferTo() {
                 <p className="text-lg ">Amount</p>
                 <div className="relative">
                   <input
-                    type="text"
+                    type="number"
                     className="w-full border rounded border-gray-300 p-2 outline-none"
-                    onChange={(e) => {
-                      setAmount(parseInt(e.target.value));
-                    }}
+                    onChange={
+                      handleChange
+                    }
+                    value={amount}
                   />
                   <p className="absolute right-4 top-1.5 text-xl text-gray-400">
                     THB
@@ -75,11 +81,15 @@ export default function TransferTo() {
               </div>
               <button
                 onClick={() => {
+                  console.log(amount);
                   if (accountNumber.length != 8){
                     alert('Please Enter Account Number')
                   }
-                  else if (parseInt(amount) <= 0) {
+                  else if (parseInt(amount) <= 0 || amount == '') {
                     alert('Please Enter Amount')
+                  }
+                  else if(user.account_number == accountNumber){
+                    alert("Don't enter your own account number.")
                   }
                   else{
                     localStorage.setItem("amount", amount);
