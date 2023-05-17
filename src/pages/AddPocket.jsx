@@ -26,7 +26,6 @@ function AddPocket() {
     console.log(index+1);
     setIsSelected(isSelected);
     setSelectIndex(index);
-    // console.log(selectIndex);
   };
   function RednderImage({ index }) {
     return (

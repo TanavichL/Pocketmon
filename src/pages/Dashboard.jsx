@@ -8,13 +8,50 @@ import investment from "../assets/investment_cloud.svg";
 import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
-import { Chart } from "react-google-charts";
+import { Chart } from "react-google-charts"; 
+
+const ExpenseChart = () => {
+
+  // Dummy data for monthly expenses
+  const data = [['Month', '2023'],
+    ['Jan', 1000],
+    ['Feb', 800],
+    ['Mar', 1200],
+    ['Apr', 900],
+    ['May', 1500],
+    ['Jun', 1100],
+    ['July', 1300],
+    ['Aug', 1000],
+    ['Sep', 900],
+    ['Oct', 1200],
+    ['Nov', 800],
+    ['Dec', 1100]
+  ];
+
+  return (
+    <Chart
+      width={'100%'}
+      height={'400px'}
+      chartType="ColumnChart"
+      loader={<div>Loading Chart...</div>}
+      data={data}
+      options={{
+        title: 'Monthly Expenses',
+        chartArea: { width: '80%' },
+        colors: ['#FFD1DC'],
+      }}
+      legendToggle
+    />
+  );
+};
 
 function Dashboard() {
   const [user, setUser] = useState(null);
   const [balances, setBalance] = useState(0);
   const [cashbox, setCashbox] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [recent, setRecent] = useState([])
+  var collectRecent = []
 
   useEffect(() => {
     axios
@@ -24,30 +61,65 @@ function Dashboard() {
       .then((res) => {
         try {
           setUser(res.data);
+          console.log(res.data.pocket);
+          let array = [];
+
           for (let i = 0; i < res.data.pocket.length; i++) {
-            var pocket = res.data.pocket[i]
-            console.log(pocket)
+            var pocket = res.data.pocket[i];
+
             for (let j = 0; j < pocket.cloud_statement.length; j++) {
-              console.log(pocket.cloud_statement[j][Object.keys(pocket.cloud_statement[j])].st_to, i)
+              if (
+                pocket.cloud_statement[j][
+                  Object.keys(pocket.cloud_statement[j])
+                ].st_to
+              ) {
+                const promise = axios.post(`${path}/getaccountnumber`, {
+                  account_number:
+                    pocket.cloud_statement[j][
+                      Object.keys(pocket.cloud_statement[j])
+                    ].st_to,
+                });
+
+                array.push(promise);
+              }
             }
-            
           }
-          // console.log(res.data.pocket[0].cloud_statement[9][Object.keys(res.data.pocket[0].cloud_statement[9])].st_to)
+          Promise.all(array)
+            .then((response) => {
+              let newArray = [...recent];
+
+              response.forEach((res) => {
+                const existingAccount = newArray.find(
+                  (e) => e.account_number === res.data.account_number
+                );
+
+                if (!existingAccount) {
+                  newArray.push({
+                    name: res.data.firstname + " " + res.data.lastname,
+                    account_number: res.data.account_number,
+                  });
+                }
+              }); 
+              setRecent(newArray);
+              localStorage.setItem("recent", JSON.stringify(newArray  ))
+              console.log(newArray);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
           setCashbox(res.data.cashbox.balance);
           let cash = 0;
           res.data.pocket.forEach((element) => {
-            // console.log(element.cloud_balance);
             cash += element.cloud_balance;
-            // console.log(balances);
           });
           setBalance(cash);
-        } catch (er) {
-          console.log(er);
+        } catch (error) {
+          console.log(error);
         }
       });
   }, []);
   
-
 
 
   const colors = ["#FFD1DC","#ADD8E6","#B19CD9","#77DD77","#FFFFE0","#FFB347","#CFCFC4","#FFE5B4","#E6E6FA","#98FB98"]
@@ -91,7 +163,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="w-[85%] flex mt-14">
+      <div className="w-[85%] flex mt-14">  
         {/* Cloud Pocket */}
         <div className="w-[60%] p-8 pb-10 rounded-2xl shadow-king bg-white mr-14">
           <div id="top-cloud-pocket-box" className="flex justify-between">
@@ -185,55 +257,37 @@ function Dashboard() {
             </p>
             <div className="h-1 w-[5rem] mt-1.5 bg-[#07636B] rounded-full"></div>
             <div className="mt-4 flex space-x-6">
-              <div className="flex flex-col items-center space-y-1">
+              {
+              recent && recent.map((res, index) =>{
+                return (<div key={index} className="select-none flex flex-col items-center space-y-1">
                 <img src={IconProfile} alt="" />
                 <p
                   id="name-profile-recent"
                   className="text-[#07636B] font-jura font-bold"
                 >
-                  Phufa
+                  {res.name}
                 </p>
                 <p
                   id="account-number-recent"
                   className="text-[#07636B] font-jura font-bold"
                 >
-                  x-xxx-1234
+                  {'x-xxx-'+res.account_number.slice(-4)}
                 </p>
-              </div>
-              <div className="flex flex-col items-center space-y-1">
-                <img src={IconProfile} alt="" />
-                <p
-                  id="name-profile-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  Mind
-                </p>
-                <p
-                  id="account-number-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  x-xxx-1234
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-1">
-                <img src={IconProfile} alt="" />
-                <p
-                  id="name-profile-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  Owen
-                </p>
-                <p
-                  id="account-number-recent"
-                  className="text-[#07636B] font-jura font-bold"
-                >
-                  x-xxx-1234
-                </p>
-              </div>
+              </div>);
+              })
+              }
             </div>
           </div>
         </div>
       </div>
+      <div className="w-[85%] flex mt-14">
+        <div className="w-full p-8 pb-10 rounded-2xl shadow-king bg-white ">
+          <ExpenseChart />
+        </div>
+      </div>
+
+
+
     </div>
   );
 }
