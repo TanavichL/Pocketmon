@@ -8,7 +8,42 @@ import investment from "../assets/investment_cloud.svg";
 import IconProfile from "../assets/profile-icon.svg";
 import axios from "axios";
 import path from "../../path";
-import { Chart } from "react-google-charts";
+import { Chart } from "react-google-charts"; 
+
+const ExpenseChart = () => {
+
+  // Dummy data for monthly expenses
+  const data = [['Month', '2023'],
+    ['Jan', 1000],
+    ['Feb', 800],
+    ['Mar', 1200],
+    ['Apr', 900],
+    ['May', 1500],
+    ['Jun', 1100],
+    ['July', 1300],
+    ['Aug', 1000],
+    ['Sep', 900],
+    ['Oct', 1200],
+    ['Nov', 800],
+    ['Dec', 1100]
+  ];
+
+  return (
+    <Chart
+      width={'100%'}
+      height={'400px'}
+      chartType="ColumnChart"
+      loader={<div>Loading Chart...</div>}
+      data={data}
+      options={{
+        title: 'Monthly Expenses',
+        chartArea: { width: '80%' },
+        colors: ['#FFD1DC'],
+      }}
+      legendToggle
+    />
+  );
+};
 
 function Dashboard() {
   const [user, setUser] = useState(null);
@@ -38,7 +73,6 @@ function Dashboard() {
       });
   }, []);
   
-
 
 
   const colors = ["#FFD1DC","#ADD8E6","#B19CD9","#77DD77","#FFFFE0","#FFB347","#CFCFC4","#FFE5B4","#E6E6FA","#98FB98"]
@@ -82,7 +116,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="w-[85%] flex mt-14">
+      <div className="w-[85%] flex mt-14">  
         {/* Cloud Pocket */}
         <div className="w-[60%] p-8 pb-10 rounded-2xl shadow-king bg-white mr-14">
           <div id="top-cloud-pocket-box" className="flex justify-between">
@@ -225,6 +259,14 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      <div className="w-[85%] flex mt-14">
+        <div className="w-full p-8 pb-10 rounded-2xl shadow-king bg-white ">
+          <ExpenseChart />
+        </div>
+      </div>
+
+
+
     </div>
   );
 }
