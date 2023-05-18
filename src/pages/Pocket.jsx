@@ -204,6 +204,7 @@ function Pocket() {
                     <input
                       type="checkbox"
                       value=""
+                      checked={isChecked}
                       className="sr-only peer"
                       onChange={handleCheckboxChange}
                     ></input>
